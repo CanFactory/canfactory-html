@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.project
+*.war
+*.classpath
+target/
+.idea/
+*.iml
+*.ipr
+.DS_Store
