@@ -26,15 +26,15 @@ import static org.testng.Assert.assertNotNull;
 public class NavigationAssertions {
 
     public void shouldLocateFirstMatchingElement(){
-        Html htlm = fromResource("sample.html");
+        HtmlFragment htlm = fromResource("sample.html");
 
-        Html h1 = htlm.first("h1");
+        HtmlFragment h1 = htlm.first("h1");
         assertNotNull(h1);
         h1.assertHasText("Sample");
     }
 
-    private Html fromResource(String name) {
-        return new Html(this.getClass().getResourceAsStream("/com/canfactory/html/" + name));
+    private HtmlFragment fromResource(String name) {
+        return new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/" + name));
 
     }
 

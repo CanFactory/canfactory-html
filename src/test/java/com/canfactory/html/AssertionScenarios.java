@@ -14,9 +14,14 @@
 
 package com.canfactory.html;
 
+import com.canfactory.html.hamcrest.HasContent;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+
+import static com.canfactory.html.hamcrest.HasContent.hasContent;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * These test assertion style behaviour
@@ -26,7 +31,22 @@ import java.io.IOException;
 public class AssertionScenarios {
 
     public void shouldContainText() throws IOException {
-        Html html = new Html(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
+        HtmlFragment html = new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
         html.assertHasText("This is some really simple html");
+
+
+        assertThat(html, equalTo(html));
+
+    }
+
+    public void shouldSupportUseHamCrestStyleMatchers() throws IOException{
+        HtmlFragment html = new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
+
+        assertThat(html, hasContent(html));
+
+        assertThat(html, HasContent.hasContent("This is some really simple html"));
+
+
+
     }
 }
