@@ -17,6 +17,7 @@ package com.canfactory.html;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * These test the ability to navigate through the HTML and pick out matching sections
@@ -26,15 +27,16 @@ import static org.testng.Assert.assertNotNull;
 public class NavigationAssertions {
 
     public void shouldLocateFirstMatchingElement(){
-        HtmlFragment htlm = fromResource("sample.html");
+        ExtantHtmlFragment htlm = fromResource("sample.outerHtml");
 
-        HtmlFragment h1 = htlm.first("h1");
+        HtmlElement h1 = htlm.first("h1");
         assertNotNull(h1);
-        h1.assertHasText("Sample");
+        assertTrue(h1 instanceof ExtantHtmlElement);
+       // h1.assertHasText("Sample");
     }
 
-    private HtmlFragment fromResource(String name) {
-        return new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/" + name));
+    private ExtantHtmlFragment fromResource(String name) {
+        return new ExtantHtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/" + name));
 
     }
 

@@ -14,14 +14,12 @@
 
 package com.canfactory.html;
 
-import com.canfactory.html.hamcrest.HasContent;
+import com.canfactory.html.HtmlFragment.Factory;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static com.canfactory.html.hamcrest.HasContent.hasContent;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.testng.Assert.assertEquals;
 
 /**
  * These test assertion style behaviour
@@ -31,22 +29,77 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class AssertionScenarios {
 
     public void shouldContainText() throws IOException {
-        HtmlFragment html = new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
-        html.assertHasText("This is some really simple html");
+        HtmlFragment html = Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
+
+        assertEquals (html.text(),"Sample Sample This is some really simple html for basic testing. See for more information.");
 
 
-        assertThat(html, equalTo(html));
+        //assertThat(outerHtml, equalTo(outerHtml));
 
     }
 
     public void shouldSupportUseHamCrestStyleMatchers() throws IOException{
-        HtmlFragment html = new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/html/sample.html"));
+        /*
+        HtmlFragment outerHtml = new HtmlFragment(this.getClass().getResourceAsStream("/com/canfactory/outerHtml/sample.outerHtml"));
 
-        assertThat(html, hasContent(html));
+        assertThat(outerHtml, hasContent(outerHtml));
 
-        assertThat(html, HasContent.hasContent("This is some really simple html"));
+        assertThat(outerHtml, HasContent.hasHtml("This is some really simple outerHtml"));
+
+        assertThat(outerHtml, hasAttributes({"class": "ribbon"}));
+
+        String outerHtml = renderer.render();
+        assertThat(new HtmlFragment(outerHtml).all("h1"), hasText("sdfiosjfij"));
+        assertThat(new HtmlFragment(outerHtml).all("h1"), count(6));
+        assertThat(new HtmlFragment(outerHtml).all("h1"), hasText("sdfiosjfij"));
+        assertThat(new HtmlFragment(outerHtml).all(new HtmlMatcher(){}), hasText("sdfiosjfij"));
+        assertThat(new HtmlFragment(outerHtml).all(new HtmlMatcher(){}), hasAttributes(map)); //or
+        assertThat(new HtmlFragment(outerHtml).all(new HtmlMatcher(){}), hasAttributes(HtmlAttribute... attributes));
+
+        assertThat(new HtmlFragment(outerHtml).all("img"), none());
+
+
+        assertThat(new HtmlFragment(outerHtml).all("h1"), doesNoHaveText("sdfiosjfij"));
+//        assertThat(new HtmlFragment(outerHtml).no("h1"), haveText("sdfiosjfij"));
+
+    //    assertThat(new HtmlFragment(outerHtml).all("h1").withText("sss"), isNotPresent());
 
 
 
+
+        .first("h1")    // HtmlElement - fail for no element
+        .nth(4, "h1")   // HtmlElement - fail for no element
+        .last("h1")     // HtmlElement - fail for no element
+        .all("h1")      // ImmutableList<HtmlElement> or Iterator<HtmlElement> - fail for no element
+        .all("form").all("input")
+
+                .all("form input:first-child")
+
+                .all("form").first("input")
+
+Optional<? extends HtmlElement>     // don't have standard type om Java
+Iterator<HtmlElement>   // check for one is painflul
+ImmutableList<HtmlElement>   // higher order function but not standards
+
+HtmlElement interface
+
+            -> ?HtmlElement
+            -> EmptyHtmlElement
+
+HtmlElement
+        .exists()
+
+
+---------------------
+
+        hasText()
+        doesNotHaveText() // not(haveText())
+        count(int)
+        none()
+        hasAttributes()
+        doesNotHaveAttributes()
+        hasClass(String... classname) hasClass("class1", "class2")
+        doesNotHaveClass(String... classname)
+        */
     }
 }
