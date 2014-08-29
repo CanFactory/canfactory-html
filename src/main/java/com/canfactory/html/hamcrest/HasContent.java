@@ -22,7 +22,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 
-// A hamcrest binding to the
 public class HasContent extends TypeSafeMatcher<ExtantHtmlFragment> {
     public HasContent(HtmlFragment html) {
         //super("containing", ignoringCase, substring);

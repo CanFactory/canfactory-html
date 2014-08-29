@@ -36,7 +36,6 @@ public class HtmlMatcherTest {
         assertFalse(new HtmlMatcher(html).is("<p>LOREM IPSUM</p>").passed());
         assertFalse(new HtmlMatcher(html).is("<p class=\"body\">Lorem impsum</p>").passed());
 
-        //assertFalse(new HtmlMatcher(outerHtml).containsText("not found").passed());
     }
 
     private ExtantHtmlFragment loadExample(String exampleFileName) {

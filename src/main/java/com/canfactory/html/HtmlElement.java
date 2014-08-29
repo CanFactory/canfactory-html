@@ -36,6 +36,8 @@ public interface HtmlElement {
 
     String outerHtml();
 
+    Attributes attributes();
+
     public static class Factory {
         public static HtmlElement fromStream(InputStream is) {
             return new ExtantHtmlElement(is);

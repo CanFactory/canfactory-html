@@ -16,6 +16,7 @@ package com.canfactory.html;
 
 public class EmptyHtmlElement implements HtmlElement {
     private static String EMPTY = "";
+    private static Attributes ATTRS = Attributes.build().end();
     public static HtmlElement INSTANCE = new EmptyHtmlElement();
 
     @Override
@@ -51,5 +52,10 @@ public class EmptyHtmlElement implements HtmlElement {
     @Override
     public String outerHtml() {
         return EMPTY;
+    }
+
+    @Override
+    public Attributes attributes() {
+        return ATTRS;
     }
 }

@@ -55,11 +55,13 @@ public class ExtantHtmlFragment implements HtmlFragment {
         }
     }
 
-
-    @Deprecated
     protected Element firstElement() {
-        // there should be a neater way?
-        return doc.select("body > *").first();
+        if (elements != null) {
+            return elements.get(0);
+        } else {
+            // there should be a neater way?
+            return doc.select("body > *").first();
+        }
     }
 
     protected Elements elements() {
@@ -109,7 +111,11 @@ public class ExtantHtmlFragment implements HtmlFragment {
 
     @Override
     public String text() {
-        return doc.text();
+        if (doc != null) {
+            return doc.text();
+        } else {
+            return elements.text();
+        }
     }
 
     @Override
@@ -119,6 +125,11 @@ public class ExtantHtmlFragment implements HtmlFragment {
         } else {
             return doc.select("body > *").outerHtml();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "An HtmFragment of\n" + outerHtml();
     }
 
 }

@@ -19,6 +19,8 @@ import org.jsoup.nodes.Element;
 import java.io.InputStream;
 
 public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement {
+    private Attributes attrs;
+
     public ExtantHtmlElement(String html) {
         super(html);
         assertValidContent();
@@ -41,7 +43,7 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
 
     @Override
     public HtmlElement nth(int index, String cssSelector) {
-        return super.nth(index,cssSelector);
+        return super.nth(index, cssSelector);
     }
 
     @Override
@@ -71,6 +73,15 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
         } else {
             return doc.select("body > *").outerHtml();
         }
+    }
+
+    @Override
+    public Attributes attributes() {
+        if (attrs == null) {
+            Element e = firstElement();
+            attrs = new Attributes(firstElement().attributes());
+        }
+        return attrs;
     }
 
     private void assertValidContent() {
