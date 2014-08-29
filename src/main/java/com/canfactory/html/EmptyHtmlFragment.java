@@ -14,6 +14,8 @@
 
 package com.canfactory.html;
 
+import com.canfactory.html.hamcrest.HtmlElements;
+
 public class EmptyHtmlFragment implements HtmlFragment {
     private static String EMPTY = "";
     public static HtmlFragment INSTANCE = new EmptyHtmlFragment();
@@ -41,6 +43,11 @@ public class EmptyHtmlFragment implements HtmlFragment {
     @Override
     public HtmlFragment all(String cssSelector) {
         return INSTANCE;
+    }
+
+    @Override
+    public HtmlElements elements() {
+        return HtmlElements.EMPTY;
     }
 
     @Override

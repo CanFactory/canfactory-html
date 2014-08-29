@@ -14,6 +14,7 @@
 
 package com.canfactory.html;
 
+import com.canfactory.html.hamcrest.HtmlElements;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +22,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents an Html fragment, i.e. part of the page. This may possibly be a fully formed HtmlPage. It
@@ -64,7 +67,7 @@ public class ExtantHtmlFragment implements HtmlFragment {
         }
     }
 
-    protected Elements elements() {
+    protected Elements allJSoupElements() {
         if (elements != null) {
             return elements;
         } else {
@@ -85,7 +88,7 @@ public class ExtantHtmlFragment implements HtmlFragment {
     @Override
     public HtmlElement nth(int index, String cssSelector) {
         if (index <= 0) throw new IllegalArgumentException("Index must be one based");
-        Elements matched = elements().select(cssSelector);
+        Elements matched = allJSoupElements().select(cssSelector);
         if (matched.size() >= index && index > 0) {
             return new ExtantHtmlElement(matched.get(index - 1).outerHtml());
         } else {
@@ -95,7 +98,7 @@ public class ExtantHtmlFragment implements HtmlFragment {
 
     @Override
     public HtmlElement last(String cssSelector) {
-        Elements matched = elements().select(cssSelector);
+        Elements matched = allJSoupElements().select(cssSelector);
         if (matched.size() > 0) {
             return new ExtantHtmlElement(matched.get(matched.size() - 1).outerHtml());
         } else {
@@ -105,8 +108,25 @@ public class ExtantHtmlFragment implements HtmlFragment {
 
     @Override
     public HtmlFragment all(String cssSelector) {
-        Elements matched = elements().select(cssSelector);
+        Elements matched = allJSoupElements().select(cssSelector);
         return HtmlFragment.Factory.fromElements(matched);
+    }
+
+    @Override
+    public HtmlElements elements() {
+        Elements e;
+        if (elements != null) {
+            e = elements;
+        } else {
+            e = doc.select("body > *");
+        }
+
+        List<HtmlElement> results = new ArrayList<HtmlElement>(e.size());
+        for (Element ele : e) {
+            results.add(HtmlElement.Factory.fromElement(ele));
+
+        }
+        return new HtmlElements(results);
     }
 
     @Override

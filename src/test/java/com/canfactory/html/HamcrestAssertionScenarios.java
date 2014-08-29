@@ -19,6 +19,7 @@ import com.canfactory.html.HtmlFragment.Factory;
 import org.testng.annotations.Test;
 
 import static com.canfactory.html.hamcrest.HasAttr.hasAttr;
+import static com.canfactory.html.hamcrest.HasCount.hasCount;
 import static com.canfactory.html.hamcrest.HasText.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
@@ -39,6 +40,14 @@ public class HamcrestAssertionScenarios {
         assertThat(fragment.first("ul"), hasAttr("id", "colours"));
         assertThat(fragment.first("ul"), hasAttr(new Attribute("id", "colours")));
         assertThat(fragment.first("ul"), not(hasAttr("id", "numbers")));
+    }
+
+    public void shouldAssertCount() {
+        HtmlFragment fragment = loadExample("simple-lists.html");
+
+        assertThat(fragment.all("ul"), hasCount(4));
+        assertThat(fragment.all("#colours li"), hasCount(3));
+        assertThat(fragment.all("li"), not(hasCount(0)));
     }
 
     private HtmlFragment loadExample(String exampleFileName) {

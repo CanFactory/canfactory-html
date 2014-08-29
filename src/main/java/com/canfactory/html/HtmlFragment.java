@@ -14,6 +14,7 @@
 
 package com.canfactory.html;
 
+import com.canfactory.html.hamcrest.HtmlElements;
 import org.jsoup.select.Elements;
 
 import java.io.InputStream;
@@ -30,6 +31,8 @@ public interface HtmlFragment {
     HtmlElement last(String cssSelector);
 
     HtmlFragment all(String cssSelector);
+
+    HtmlElements elements();
 
     String text();
 
