@@ -15,10 +15,12 @@
 package com.canfactory.html;
 
 import com.canfactory.html.Attributes.Attribute;
-import com.canfactory.html.HtmlFragment.Factory;
 import org.testng.annotations.Test;
 
 import static com.canfactory.html.hamcrest.HasAttr.hasAttr;
+import static com.canfactory.html.hamcrest.HasAttr.hasAttrs;
+import static com.canfactory.html.hamcrest.HasClass.hasClass;
+import static com.canfactory.html.hamcrest.HasClass.hasClasses;
 import static com.canfactory.html.hamcrest.HasCount.hasCount;
 import static com.canfactory.html.hamcrest.HasText.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,6 +44,37 @@ public class HamcrestAssertionScenarios {
         assertThat(fragment.first("ul"), not(hasAttr("id", "numbers")));
     }
 
+
+    public void shouldAssertHasAttributes() {
+        HtmlElement element = HtmlElement.Factory.fromString("<p id=\"p1\" name=\"para1\"></p>");
+
+        Attribute name = new Attribute("name", "para1");
+        Attribute id = new Attribute("id", "p1");
+        assertThat(element, hasAttrs(id));
+        assertThat(element, hasAttrs(id, name));
+        assertThat(element, hasAttrs(name, id));
+        assertThat(element, not(hasAttrs(new Attribute("name", "paraX"))));
+        assertThat(element, not(hasAttrs(name, id, new Attribute("class", "classX"))));
+    }
+
+
+    public void shouldAssertHasClass() {
+        HtmlElement element = HtmlElement.Factory.fromString("<p class=\"class1 class2\"></p>");
+
+        assertThat(element, hasClass("class1"));
+        assertThat(element, hasClass("class2"));
+        assertThat(element, not(hasClass("classX")));
+    }
+
+    public void shouldAssertHasClasses() {
+        HtmlElement element = HtmlElement.Factory.fromString("<p class=\"class1 class2\"></p>");
+
+        assertThat(element, hasClasses("class1"));
+        assertThat(element, hasClasses("class1", "class2"));
+        assertThat(element, hasClasses("class2", "class1"));
+        assertThat(element, not(hasClasses("classX")));
+    }
+
     public void shouldAssertCount() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
@@ -51,6 +84,6 @@ public class HamcrestAssertionScenarios {
     }
 
     private HtmlFragment loadExample(String exampleFileName) {
-        return Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/" + exampleFileName));
+        return HtmlFragment.Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/" + exampleFileName));
     }
 }

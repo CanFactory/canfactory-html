@@ -14,11 +14,14 @@
 
 package com.canfactory.html;
 
+import com.canfactory.html.Attributes.Attribute;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class Attributes {
+public class Attributes implements Iterable<Attribute> {
     private List<Attribute> attributes;
 
     private Attributes() {
@@ -73,6 +76,11 @@ public class Attributes {
             if (attr.equals(expectedAttr)) return true;
         }
         return false;
+    }
+
+    @Override
+    public Iterator<Attribute> iterator() {
+        return Collections.unmodifiableCollection(attributes).iterator();
     }
 
     public static class Builder {

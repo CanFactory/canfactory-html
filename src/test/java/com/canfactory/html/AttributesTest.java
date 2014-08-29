@@ -20,10 +20,9 @@ import org.jsoup.nodes.Document;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 @Test
 public class AttributesTest {
@@ -49,8 +48,8 @@ public class AttributesTest {
 
         assertTrue(attrs.hasAttribute("class"));
         assertFalse(attrs.hasAttribute("id"));
-        assertTrue(attrs.contains(new Attribute("class","highlight")));
-        assertFalse(attrs.contains(new Attribute("class","bold")));
+        assertTrue(attrs.contains(new Attribute("class", "highlight")));
+        assertFalse(attrs.contains(new Attribute("class", "bold")));
     }
 
     public void shouldReturnEmptyStringForMissingAttribute() {
@@ -62,6 +61,21 @@ public class AttributesTest {
     public void shouldBuildFormattedString() {
         Attributes attrs = Attributes.build().attr("id", "main-body").attr("class", "highlight").end();
 
-        assertEquals(attrs.toString(),"id=\"main-body\" class=\"highlight\"");
+        assertEquals(attrs.toString(), "id=\"main-body\" class=\"highlight\"");
+    }
+
+    public void shouldBeIterable() {
+        Attribute id = new Attribute("id", "element#1");
+        Attribute name = new Attribute("name", "element one");
+        Attributes attrs = Attributes.build().attr(id).attr(name).end();
+
+        // does the iterator work
+        Iterator<Attribute> iter = attrs.iterator();
+        assertEquals(iter.next(), id);
+        assertEquals(iter.next(), name);
+        assertFalse(iter.hasNext());
+
+        // is it marked as iterable
+        assertTrue(attrs instanceof Iterable);
     }
 }

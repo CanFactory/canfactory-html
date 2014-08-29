@@ -14,51 +14,50 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.Attributes.Attribute;
 import com.canfactory.html.HtmlElement;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
-public class HasAttr extends BaseHtmlElementMatcher {
-    private List<Attribute> expectedAttrs;
+public class HasClass extends BaseHtmlElementMatcher {
+    private List<String> expectedClasses;
 
-
-    public HasAttr(List<Attribute> expectedAttrs) {
-        this.expectedAttrs = expectedAttrs;
+    public HasClass(List<String> expectedClasses) {
+        this.expectedClasses = expectedClasses;
     }
 
     @Factory
-    public static Matcher<HtmlElement> hasAttr(String name, String value) {
-        return new HasAttr(Arrays.asList(new Attribute(name, value)));
+    public static Matcher<HtmlElement> hasClass(String expectedClass) {
+        return new HasClass(Arrays.asList(expectedClass));
     }
 
     @Factory
-    public static Matcher<HtmlElement> hasAttr(Attribute attr) {
-        return new HasAttr(Arrays.asList(attr));
+    public static Matcher<HtmlElement> hasClasses(String... expectedClasses) {
+        return new HasClass(Arrays.asList(expectedClasses));
     }
 
-    @Factory
-    public static Matcher<HtmlElement> hasAttrs(Attribute... attrs) {
-        return new HasAttr(Arrays.asList(attrs));
-    }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("An HtmlElement containing the attr ").appendValue(expectedAttrs);
+        String classes = null;
+        for (String c : expectedClasses) {
+            if (classes == null) {
+                classes = c;
+            } else {
+                classes = classes + (" " + c);
+            }
+        }
+        description.appendText("An HtmlElement with the class(es) ").appendValue(classes);
     }
 
     @Override
     protected boolean matchesSafely(HtmlElement html) {
-        Set<Attribute> toLookFor = new HashSet<Attribute>(expectedAttrs);
-        for (Attribute actualAttr : html.attributes()) {
-            toLookFor.remove(actualAttr);
+        Set<String> toLookFor = new HashSet<String>(expectedClasses);
+        for (String actualClass : html.attributes().value("class").split(" ")) {
+            toLookFor.remove(actualClass.trim());
         }
         return toLookFor.isEmpty();
     }
