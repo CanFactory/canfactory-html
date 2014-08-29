@@ -59,7 +59,11 @@ public interface HtmlFragment {
         }
 
         public static HtmlFragment fromString(String html) {
-            return new ExtantHtmlFragment(html);
+            if (html != null && html.length() > 0) {
+                return new ExtantHtmlFragment(html);
+            } else {
+                return new EmptyHtmlFragment();
+            }
         }
 
         public static HtmlFragment fromElements(Elements elements) {

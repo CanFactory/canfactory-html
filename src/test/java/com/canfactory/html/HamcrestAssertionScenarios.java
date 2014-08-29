@@ -22,6 +22,8 @@ import static com.canfactory.html.hamcrest.HasAttr.hasAttrs;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
 import static com.canfactory.html.hamcrest.HasClass.hasClasses;
 import static com.canfactory.html.hamcrest.HasCount.hasCount;
+import static com.canfactory.html.hamcrest.HasElement.elementExists;
+import static com.canfactory.html.hamcrest.HasFragment.fragmentExists;
 import static com.canfactory.html.hamcrest.HasText.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
@@ -81,6 +83,14 @@ public class HamcrestAssertionScenarios {
         assertThat(fragment.all("ul"), hasCount(4));
         assertThat(fragment.all("#colours li"), hasCount(3));
         assertThat(fragment.all("li"), not(hasCount(0)));
+    }
+
+    public void shouldExist() {
+        assertThat(HtmlElement.Factory.fromString("<p>Lorem Ipsum...</p>"), elementExists());
+        assertThat(HtmlElement.Factory.fromString(null), not(elementExists()));
+
+        assertThat(HtmlFragment.Factory.fromString("<p>Lorem Ipsum...</p>"), fragmentExists());
+        assertThat(HtmlFragment.Factory.fromString(null), not(fragmentExists()));
     }
 
     private HtmlFragment loadExample(String exampleFileName) {

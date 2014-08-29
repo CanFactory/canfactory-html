@@ -22,9 +22,9 @@ import java.io.InputStream;
 
 /**
  * Represents an HtmlElement, i.e. part of the page.
- *
+ * <p/>
  * It may have just 1 root node.
- *
+ * <p/>
  * To allow easy chaining of methods without worrying about null pointer exceptions two implementation are provided.
  * {@link com.canfactory.html.ExtantHtmlElement} represents a valid element with data, whereas
  * {@link com.canfactory.html.EmptyHtmlElement} represents an empty element with no data. It methods return empty
@@ -60,7 +60,11 @@ public interface HtmlElement {
         }
 
         public static HtmlElement fromString(String html) {
-            return new ExtantHtmlElement(html);
+            if (html != null && html.length() > 0) {
+                return new ExtantHtmlElement(html);
+            } else {
+                return EmptyHtmlElement.INSTANCE;
+            }
         }
 
         public static HtmlElement fromElement(Element element) {
