@@ -14,6 +14,10 @@
 
 package com.canfactory.html;
 
+/**
+ * An empty {@link com.canfactory.html.HtmlElement}. All the methods return valid but empty objects so they can safely
+ * chained without caring about null pointer exceptions.
+ */
 public class EmptyHtmlElement implements HtmlElement {
     private static String EMPTY = "";
     private static Attributes ATTRS = Attributes.build().end();

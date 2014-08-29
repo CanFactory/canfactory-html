@@ -14,11 +14,22 @@
 
 package com.canfactory.html;
 
-import com.canfactory.html.hamcrest.HtmlElements;
 import org.jsoup.select.Elements;
 
 import java.io.InputStream;
 
+/**
+ * Represents an Html fragment, i.e. part of the page. This may possibly be a fully formed HtmlPage. It
+ * could also actually be just a single element.
+ *
+ * It may have 1 or more root nodes.
+ *
+ * To allow easy chaining of methods without worrying about null pointer exceptions two implementation are provided.
+ * {@link com.canfactory.html.ExtantHtmlFragment} represents a valid fragment with data, whereas
+ * {@link com.canfactory.html.EmptyHtmlFragment} represents an empty fragment with no data. It methods return empty
+ * objects, so they can safely chained. This is kind of a crude implementation of the Option<HtmlFragment> that would be
+ * possible in Java 8.
+ */
 public interface HtmlFragment {
 
     // does this exists, i.e. have data
@@ -40,7 +51,11 @@ public interface HtmlFragment {
 
     public static class Factory {
         public static HtmlFragment fromStream(InputStream is) {
-            return new ExtantHtmlFragment(is);
+            if (is != null) {
+                return new ExtantHtmlFragment(is);
+            } else {
+                throw new RuntimeException("InputStream is missing");
+            }
         }
 
         public static HtmlFragment fromString(String html) {

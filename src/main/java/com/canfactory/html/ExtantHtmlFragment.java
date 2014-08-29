@@ -14,7 +14,6 @@
 
 package com.canfactory.html;
 
-import com.canfactory.html.hamcrest.HtmlElements;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,27 +25,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an Html fragment, i.e. part of the page. This may possibly be a fully formed HtmlPage. It
- * could also actually be just a single element
+ * An valid (exists) {@link com.canfactory.html.HtmlFragment}. Use the static methods
+ * on {@link com.canfactory.html.HtmlFragment.Factory} to create instances.
  */
-
 public class ExtantHtmlFragment implements HtmlFragment {
     protected Document doc;
     protected Elements elements;
 
-    protected ExtantHtmlFragment(String html) {
+    ExtantHtmlFragment(String html) {
         doc = Jsoup.parse(html);
     }
 
-    protected ExtantHtmlFragment(Document jsoup) {
+    ExtantHtmlFragment(Document jsoup) {
         this.doc = jsoup;
     }
 
-    protected ExtantHtmlFragment(Element element) {
+    ExtantHtmlFragment(Element element) {
         this.doc = Jsoup.parse(element.outerHtml());
     }
 
-    protected ExtantHtmlFragment(Elements elements) {
+    ExtantHtmlFragment(Elements elements) {
         this.elements = elements;
     }
 

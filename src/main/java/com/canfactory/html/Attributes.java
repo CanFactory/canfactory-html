@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Represents a list of html attributes associated with an element
+ */
 public class Attributes implements Iterable<Attribute> {
     private List<Attribute> attributes;
 
@@ -33,6 +36,10 @@ public class Attributes implements Iterable<Attribute> {
         for (org.jsoup.nodes.Attribute jsoupAttr : jsoupAttributes) {
             attributes.add(new Attribute(jsoupAttr));
         }
+    }
+
+    public Attributes(List<Attribute> attrs) {
+        this.attributes = attrs;
     }
 
     public static Builder build() {

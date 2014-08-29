@@ -12,14 +12,17 @@
 // the program(s) have been supplied.
 //-----------------------------------------------------------------------
 
-package com.canfactory.html.hamcrest;
-
-import com.canfactory.html.HtmlElement;
+package com.canfactory.html;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// A list of HtmlElements
+/**
+ * Wraps a list of {@link com.canfactory.html.HtmlElement}s. to allow safe operations
+ * over the list.
+ * <p/>
+ * Add more methods as required.
+ */
 public class HtmlElements {
 
     private List<HtmlElement> data;

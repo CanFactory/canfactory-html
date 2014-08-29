@@ -18,21 +18,25 @@ import org.jsoup.nodes.Element;
 
 import java.io.InputStream;
 
+/**
+ * An valid (exists) {@link com.canfactory.html.HtmlElement}. Use the static methods
+ * on {@link com.canfactory.html.HtmlElement.Factory} to create instances.
+ */
 public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement {
     private Attributes attrs;
 
-    public ExtantHtmlElement(String html) {
+    ExtantHtmlElement(String html) {
         super(html);
         assertValidContent();
     }
 
-    protected ExtantHtmlElement(InputStream is) {
+    ExtantHtmlElement(InputStream is) {
         super(is);
         assertValidContent();
     }
 
 
-    public ExtantHtmlElement(Element element) {
+    ExtantHtmlElement(Element element) {
         super(element);
     }
 

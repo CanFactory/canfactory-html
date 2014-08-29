@@ -14,8 +14,10 @@
 
 package com.canfactory.html;
 
-import com.canfactory.html.hamcrest.HtmlElements;
-
+/**
+ * An empty {@link com.canfactory.html.HtmlFragment}. All the methods return valid but empty objects so they can safely
+ * chained without caring about null pointer exceptions.
+ */
 public class EmptyHtmlFragment implements HtmlFragment {
     private static String EMPTY = "";
     public static HtmlFragment INSTANCE = new EmptyHtmlFragment();
