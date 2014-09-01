@@ -16,50 +16,34 @@ package com.canfactory.html.hamcrest;
 
 import com.canfactory.html.BaseHtml;
 import com.canfactory.html.HtmlElement;
-import com.canfactory.html.HtmlElements;
-import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
+// a short circuit style match
+public class Any extends BaseHtmlMatcher<BaseHtml> {
 
-public class HasText extends BaseHtmlMatcher<BaseHtml> {
-    private String expectedText;
-    private boolean isFragment;
+    private Matcher<BaseHtml> matcher;
 
-    public HasText(String text) {
-        this.expectedText = text;
+    public Any(Matcher<BaseHtml> matcher) {
+        this.matcher = matcher;
     }
 
     @Factory
-    public static Matcher<BaseHtml> hasText(String text) {
-        return new HasText(text);
+    public static Matcher<BaseHtml> any(Matcher<BaseHtml> matcher) {
+        return new Any(matcher);
     }
 
     @Override
     public void describeTo(Description description) {
-        if (isFragment) {
-            description.appendText("An HtmlFragment where all elements contained the text ").appendValue(expectedText);
-        }
-        else {
-            description.appendText("An HtmlElement containing the text ").appendValue(expectedText);
-        }
     }
 
     @Override
     protected boolean matchesSafely(BaseHtml html) {
-        if (html instanceof HtmlElement) {
-            return html.text().contains(expectedText);
+        for (HtmlElement e : html.elements()) {
+            if (matcher.matches(e)) return true;
         }
-
-        isFragment = true;
-        HtmlElements elements = ((HtmlFragment)html).elements();
-        for (HtmlElement e : elements) {
-            if (!e.text().contains(expectedText)){
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 }
 

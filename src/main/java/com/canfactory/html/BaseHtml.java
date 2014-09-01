@@ -19,7 +19,13 @@ package com.canfactory.html;
  * {@link com.canfactory.html.HtmlFragment}.
  */
 public interface BaseHtml {
+    // container ??
     boolean exists();
+
+    // ???
+    HtmlElements elements();
+
+    // seacrhing
 
     HtmlElement first(String cssSelector);
 
@@ -32,4 +38,6 @@ public interface BaseHtml {
     String text();
 
     String outerHtml();
+
+
 }

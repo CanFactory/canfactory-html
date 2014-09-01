@@ -15,6 +15,8 @@
 package com.canfactory.html;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
  * <p/>
  * Add more methods as required.
  */
-public class HtmlElements {
+public class HtmlElements implements Iterable<HtmlElement> {
 
     private List<HtmlElement> data;
     public static HtmlElements EMPTY = new HtmlElements(new ArrayList<HtmlElement>(0));
@@ -34,5 +36,11 @@ public class HtmlElements {
 
     public int size() {
         return data.size();
+    }
+
+
+    @Override
+    public Iterator<HtmlElement> iterator() {
+        return Collections.unmodifiableList(data).iterator();
     }
 }

@@ -62,4 +62,9 @@ public class EmptyHtmlElement implements HtmlElement {
     public Attributes attributes() {
         return ATTRS;
     }
+
+    @Override
+    public HtmlElements elements() {
+        return HtmlElements.EMPTY;
+    }
 }

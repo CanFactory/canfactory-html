@@ -26,37 +26,37 @@ import java.util.List;
 import java.util.Set;
 
 
-public class HasAttr extends BaseHtmlMatcher<HtmlElement> {
-    private List<Attribute> expectedAttrs;
+public class HasAttribute extends BaseHtmlMatcher<HtmlElement> {
 
+    private List<Attribute> expectedAttributes;
 
-    public HasAttr(List<Attribute> expectedAttrs) {
-        this.expectedAttrs = expectedAttrs;
+    public HasAttribute(List<Attribute> expectedAttributes) {
+        this.expectedAttributes = expectedAttributes;
     }
 
     @Factory
-    public static Matcher<HtmlElement> hasAttr(String name, String value) {
-        return new HasAttr(Arrays.asList(new Attribute(name, value)));
+    public static Matcher<HtmlElement> hasAttribute(String name, String value) {
+        return new HasAttribute(Arrays.asList(new Attribute(name, value)));
     }
 
     @Factory
-    public static Matcher<HtmlElement> hasAttr(Attribute attr) {
-        return new HasAttr(Arrays.asList(attr));
+    public static Matcher<HtmlElement> hasAttribute(Attribute attribute) {
+        return new HasAttribute(Arrays.asList(attribute));
     }
 
     @Factory
-    public static Matcher<HtmlElement> hasAttrs(Attribute... attrs) {
-        return new HasAttr(Arrays.asList(attrs));
+    public static Matcher<HtmlElement> hasAttributes(Attribute... attributes) {
+        return new HasAttribute(Arrays.asList(attributes));
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("An HtmlElement containing the attr ").appendValue(expectedAttrs);
+        description.appendText("An HtmlElement containing the attribute ").appendValue(expectedAttributes);
     }
 
     @Override
     protected boolean matchesSafely(HtmlElement html) {
-        Set<Attribute> toLookFor = new HashSet<Attribute>(expectedAttrs);
+        Set<Attribute> toLookFor = new HashSet<Attribute>(expectedAttributes);
         for (Attribute actualAttr : html.attributes()) {
             toLookFor.remove(actualAttr);
         }

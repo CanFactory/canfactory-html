@@ -17,12 +17,14 @@ package com.canfactory.html;
 import com.canfactory.html.Attributes.Attribute;
 import org.testng.annotations.Test;
 
-import static com.canfactory.html.hamcrest.HasAttr.hasAttr;
-import static com.canfactory.html.hamcrest.HasAttr.hasAttrs;
+import static com.canfactory.html.hamcrest.Any.any;
+import static com.canfactory.html.hamcrest.HasAttribute.hasAttribute;
+import static com.canfactory.html.hamcrest.HasAttribute.hasAttributes;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
 import static com.canfactory.html.hamcrest.HasClass.hasClasses;
 import static com.canfactory.html.hamcrest.HasCount.hasCount;
 import static com.canfactory.html.hamcrest.HasElement.exists;
+import static com.canfactory.html.hamcrest.HasId.hasId;
 import static com.canfactory.html.hamcrest.HasText.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
@@ -33,16 +35,18 @@ public class HamcrestAssertionScenarios {
     public void shouldAssertHasText() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertThat(fragment.all("li"), hasText("Green"));
+        assertThat(fragment.all("li"), not(hasText("Green")));
+        assertThat(fragment.all("li"), any(hasText("Green")));
+        assertThat(fragment.nth(2, "li"), hasText("Green"));
         assertThat(fragment.all("li"), not(hasText("pink")));
     }
 
     public void shouldAssertHasAttribute() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertThat(fragment.first("ul"), hasAttr("id", "colours"));
-        assertThat(fragment.first("ul"), hasAttr(new Attribute("id", "colours")));
-        assertThat(fragment.first("ul"), not(hasAttr("id", "numbers")));
+        assertThat(fragment.first("ul"), hasAttribute("id", "colours"));
+        assertThat(fragment.first("ul"), hasAttribute(new Attribute("id", "colours")));
+        assertThat(fragment.first("ul"), not(hasAttribute("id", "numbers")));
     }
 
 
@@ -51,11 +55,11 @@ public class HamcrestAssertionScenarios {
 
         Attribute name = new Attribute("name", "para1");
         Attribute id = new Attribute("id", "p1");
-        assertThat(element, hasAttrs(id));
-        assertThat(element, hasAttrs(id, name));
-        assertThat(element, hasAttrs(name, id));
-        assertThat(element, not(hasAttrs(new Attribute("name", "paraX"))));
-        assertThat(element, not(hasAttrs(name, id, new Attribute("class", "classX"))));
+        assertThat(element, hasAttributes(id));
+        assertThat(element, hasAttributes(id, name));
+        assertThat(element, hasAttributes(name, id));
+        assertThat(element, not(hasAttributes(new Attribute("name", "paraX"))));
+        assertThat(element, not(hasAttributes(name, id, new Attribute("class", "classX"))));
     }
 
 
@@ -74,6 +78,17 @@ public class HamcrestAssertionScenarios {
         assertThat(element, hasClasses("class1", "class2"));
         assertThat(element, hasClasses("class2", "class1"));
         assertThat(element, not(hasClasses("classX")));
+    }
+
+    public void shouldAssertHasId() {
+        HtmlElement element = HtmlElement.Factory.fromString("<div id=\"component-1\"></div>");
+
+        assertThat(element, hasId("component-1"));
+        assertThat(element, not(hasId("component-2")));
+
+        HtmlElement elementWithNoId = HtmlElement.Factory.fromString("<div></div>");
+
+        assertThat(elementWithNoId, not(hasId("component-with-no-id")));
     }
 
     public void shouldAssertCount() {
