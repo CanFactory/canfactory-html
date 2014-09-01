@@ -18,11 +18,26 @@ import com.canfactory.html.HtmlElement;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-public abstract class BaseHtmlMatcher extends TypeSafeMatcher<HtmlElement> {
+public abstract class BaseHtmlElementMatcher extends TypeSafeMatcher<HtmlElement> {
+    private HtmlElement elementToMatch;
 
     @Override
     public void describeMismatchSafely(HtmlElement item, Description mismatchDescription) {
-        mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
+        mismatchDescription.appendText("The actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
+    }
+
+
+    // the description for an unexpected successful match  (see None for an example)
+    public void describeMatchSafely(Description matchDescription) {
+        if (elementToMatch != null) {
+            matchDescription.appendText("The matched html was \n\"").appendText(elementToMatch.outerHtml()).appendText("\"");
+        }
+    }
+
+
+    // subclasses should call this as first line in their match method so that reporting on unexpected successful matches is correct
+    protected void matchingOn(HtmlElement element) {
+        this.elementToMatch = element;
     }
 
 }

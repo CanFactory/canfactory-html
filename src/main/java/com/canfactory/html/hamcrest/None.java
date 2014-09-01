@@ -25,6 +25,7 @@ import org.hamcrest.TypeSafeMatcher;
 public class None extends TypeSafeMatcher<HtmlFragment> {
     private Matcher<HtmlElement> matcher;
     private int index;
+    private Matcher<HtmlElement> matched;
 
     public None(Matcher<HtmlElement> matcher) {
         this.matcher = matcher;
@@ -35,12 +36,17 @@ public class None extends TypeSafeMatcher<HtmlFragment> {
         return new None(matcher);
     }
 
-
     @Override
     public void describeTo(Description description) {
         description.appendText("Found unexpected match at element " + index + " in the fragment.");
-        description.appendText("\nThe unexpected match is below:\n");
-        description.appendDescriptionOf(matcher);
+
+        if (matcher instanceof BaseHtmlElementMatcher) {
+            description.appendText("\nThe unexpected match is below: (the first is the element that actually matched, the second (after the but) is the full fragment)\n");
+            ((BaseHtmlElementMatcher) matcher).describeMatchSafely(description);
+        } else {
+            description.appendText("\nThe unexpected match is below:\n");
+            description.appendText("not ").appendDescriptionOf(matcher);
+        }
     }
 
     @Override
@@ -49,7 +55,10 @@ public class None extends TypeSafeMatcher<HtmlFragment> {
 
         index = 1;
         for (HtmlElement e : html.elements()) {
-            if (matcher.matches(e)) return false;
+            if (matcher.matches(e)) {
+                matched = matcher;
+                return false;
+            }
             index++;
         }
         return true;

@@ -21,7 +21,7 @@ import org.hamcrest.Matcher;
 
 import java.util.*;
 
-public class HasClass extends BaseHtmlMatcher {
+public class HasClass extends BaseHtmlElementMatcher {
     private List<String> expectedClasses;
 
     public HasClass(List<String> expectedClasses) {

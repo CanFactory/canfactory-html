@@ -20,7 +20,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 
-public class HasText extends BaseHtmlMatcher {
+public class HasText extends BaseHtmlElementMatcher {
     private String expectedText;
 
     public HasText(String text) {
@@ -39,6 +39,7 @@ public class HasText extends BaseHtmlMatcher {
 
     @Override
     protected boolean matchesSafely(HtmlElement html) {
+        matchingOn(html);
         return html.text().contains(expectedText);
     }
 }

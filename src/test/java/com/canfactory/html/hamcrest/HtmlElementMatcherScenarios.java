@@ -38,7 +38,7 @@ public class HtmlElementMatcherScenarios {
     public void shouldAssertHasText() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        // check over many using the each , any and none group matchers
+        // check over many using the each, any and none group matchers
         assertThat(fragment.all("#colours"), each(hasText("Colour")));
         assertThat(fragment.all("li"), any(hasText("Green")));
         assertThat(fragment.all("li"), none(hasText("Pink")));
