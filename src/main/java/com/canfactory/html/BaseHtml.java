@@ -12,34 +12,24 @@
 // the program(s) have been supplied.
 //-----------------------------------------------------------------------
 
-package com.canfactory.html.hamcrest;
+package com.canfactory.html;
 
-import com.canfactory.html.HtmlFragment;
-import org.hamcrest.Description;
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
+/**
+ * Common functionality shared across {@link com.canfactory.html.HtmlElement} and
+ * {@link com.canfactory.html.HtmlFragment}.
+ */
+public interface BaseHtml {
+    boolean exists();
 
+    HtmlElement first(String cssSelector);
 
-public class HasFragment extends BaseHtmlFragmentMatcher {
+    HtmlElement nth(int index, String cssSelector);
 
-    public HasFragment() {
-    }
+    HtmlElement last(String cssSelector);
 
-    @Factory
-    public static Matcher<HtmlFragment> fragmentExists() {
-        return new HasFragment();
-    }
+    HtmlFragment all(String cssSelector);
 
+    String text();
 
-    @Override
-    public void describeTo(Description description) {
-        description.appendText("The HtmlFragment is missing (empty)");
-    }
-
-    @Override
-    protected boolean matchesSafely(HtmlFragment html) {
-        return html.exists();
-    }
+    String outerHtml();
 }
-
-

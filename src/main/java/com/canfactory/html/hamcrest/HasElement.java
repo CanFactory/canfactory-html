@@ -14,19 +14,19 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.HtmlElement;
+import com.canfactory.html.BaseHtml;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 
-public class HasElement extends BaseHtmlElementMatcher {
+public class HasElement extends BaseHtmlMatcher<BaseHtml> {
 
     public HasElement() {
     }
 
     @Factory
-    public static Matcher<HtmlElement> elementExists() {
+    public static Matcher<BaseHtml> exists() {
         return new HasElement();
     }
 
@@ -37,7 +37,7 @@ public class HasElement extends BaseHtmlElementMatcher {
     }
 
     @Override
-    protected boolean matchesSafely(HtmlElement html) {
+    protected boolean matchesSafely(BaseHtml html) {
         return html.exists();
     }
 }

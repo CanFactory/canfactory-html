@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class HasAttr extends BaseHtmlElementMatcher {
+public class HasAttr extends BaseHtmlMatcher<HtmlElement> {
     private List<Attribute> expectedAttrs;
 
 

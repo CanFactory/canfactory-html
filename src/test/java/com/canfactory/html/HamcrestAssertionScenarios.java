@@ -22,8 +22,7 @@ import static com.canfactory.html.hamcrest.HasAttr.hasAttrs;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
 import static com.canfactory.html.hamcrest.HasClass.hasClasses;
 import static com.canfactory.html.hamcrest.HasCount.hasCount;
-import static com.canfactory.html.hamcrest.HasElement.elementExists;
-import static com.canfactory.html.hamcrest.HasFragment.fragmentExists;
+import static com.canfactory.html.hamcrest.HasElement.exists;
 import static com.canfactory.html.hamcrest.HasText.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
@@ -86,11 +85,11 @@ public class HamcrestAssertionScenarios {
     }
 
     public void shouldExist() {
-        assertThat(HtmlElement.Factory.fromString("<p>Lorem Ipsum...</p>"), elementExists());
-        assertThat(HtmlElement.Factory.fromString(null), not(elementExists()));
+        assertThat(HtmlElement.Factory.fromString("<p>Lorem Ipsum...</p>"), exists());
+        assertThat(HtmlElement.Factory.fromString(null), not(exists()));
 
-        assertThat(HtmlFragment.Factory.fromString("<p>Lorem Ipsum...</p>"), fragmentExists());
-        assertThat(HtmlFragment.Factory.fromString(null), not(fragmentExists()));
+        assertThat(HtmlFragment.Factory.fromString("<p>Lorem Ipsum...</p>"), exists());
+        assertThat(HtmlFragment.Factory.fromString(null), not(exists()));
     }
 
     private HtmlFragment loadExample(String exampleFileName) {

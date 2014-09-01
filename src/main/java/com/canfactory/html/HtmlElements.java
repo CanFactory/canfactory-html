@@ -30,7 +30,6 @@ public class HtmlElements {
 
     public HtmlElements(List<HtmlElement> data) {
         this.data = data;
-
     }
 
     public int size() {

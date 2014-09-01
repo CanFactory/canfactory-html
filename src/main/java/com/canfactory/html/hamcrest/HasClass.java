@@ -22,7 +22,7 @@ import org.hamcrest.Matcher;
 import java.util.*;
 
 
-public class HasClass extends BaseHtmlElementMatcher {
+public class HasClass extends BaseHtmlMatcher<HtmlElement> {
     private List<String> expectedClasses;
 
     public HasClass(List<String> expectedClasses) {

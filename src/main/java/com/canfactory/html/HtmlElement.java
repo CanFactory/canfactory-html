@@ -31,22 +31,7 @@ import java.io.InputStream;
  * objects, so they can safely chained. This is kind of a crude implementation of the Option<HtmlElement> that would be
  * possible in Java 8.
  */
-public interface HtmlElement {
-
-    // does this exists, i.e. have data
-    boolean exists();
-
-    HtmlElement first(String cssSelector);
-
-    HtmlElement nth(int index, String cssSelector);
-
-    HtmlElement last(String cssSelector);
-
-    HtmlFragment all(String cssSelector);
-
-    String text();
-
-    String outerHtml();
+public interface HtmlElement extends BaseHtml {
 
     Attributes attributes();
 

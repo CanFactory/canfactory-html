@@ -14,32 +14,14 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.HtmlFragment;
+import com.canfactory.html.BaseHtml;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
-
-public class HasCount extends BaseHtmlMatcher<HtmlFragment> {
-    private int expectedCount;
-
-    public HasCount(int expectedCount) {
-        this.expectedCount = expectedCount;
-    }
-
-    @Factory
-    public static Matcher<HtmlFragment> hasCount(int expectedCount) {
-        return new HasCount(expectedCount);
-    }
-
+public abstract class BaseHtmlMatcher<T extends BaseHtml> extends TypeSafeMatcher<T> {
     @Override
-    public void describeTo(Description description) {
-        description.appendText("An HtmlFragment with").appendValue(expectedCount).appendText(" child elements");
-    }
-
-    @Override
-    protected boolean matchesSafely(HtmlFragment html) {
-        return html.elements().size() == expectedCount;
+    public void describeMismatchSafely(T item, Description mismatchDescription) {
+        mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
     }
 }
 

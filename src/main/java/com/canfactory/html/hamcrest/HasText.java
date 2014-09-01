@@ -14,13 +14,13 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.HtmlFragment;
+import com.canfactory.html.BaseHtml;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 
-public class HasText extends BaseHtmlFragmentMatcher {
+public class HasText extends BaseHtmlMatcher<BaseHtml> {
     private String expectedText;
 
     public HasText(String text) {
@@ -28,7 +28,7 @@ public class HasText extends BaseHtmlFragmentMatcher {
     }
 
     @Factory
-    public static Matcher<HtmlFragment> hasText(String text) {
+    public static Matcher<BaseHtml> hasText(String text) {
         return new HasText(text);
     }
 
@@ -38,7 +38,7 @@ public class HasText extends BaseHtmlFragmentMatcher {
     }
 
     @Override
-    protected boolean matchesSafely(HtmlFragment html) {
+    protected boolean matchesSafely(BaseHtml html) {
         return html.text().contains(expectedText);
     }
 }
