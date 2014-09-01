@@ -19,7 +19,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
-public class HasId extends BaseHtmlMatcher<HtmlElement> {
+public class HasId extends BaseHtmlMatcher {
 
     private String expectedId;
 

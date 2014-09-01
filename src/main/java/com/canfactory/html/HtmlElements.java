@@ -48,7 +48,6 @@ public interface HtmlElements extends Iterable<HtmlElement> {
 
         public static HtmlElements fromElement(HtmlElement elements) {
             if (elements != null) {
-
                 return new SingleHtmlElement(elements);
             } else {
                 throw new RuntimeException("element is missing");

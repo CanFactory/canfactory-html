@@ -19,18 +19,19 @@ import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 // a short circuit style match
-public class Any extends BaseHtmlMatcher<HtmlFragment> {
+public class Any extends TypeSafeMatcher<HtmlFragment> {
 
-    private Matcher<HtmlFragment> matcher;
+    private Matcher<HtmlElement> matcher;
 
-    public Any(Matcher<HtmlFragment> matcher) {
+    public Any(Matcher<HtmlElement> matcher) {
         this.matcher = matcher;
     }
 
     @Factory
-    public static Matcher<HtmlFragment> any(Matcher<HtmlFragment> matcher) {
+    public static Matcher<HtmlFragment> any(Matcher<HtmlElement> matcher) {
         return new Any(matcher);
     }
 
@@ -38,8 +39,15 @@ public class Any extends BaseHtmlMatcher<HtmlFragment> {
     public void describeTo(Description description) {
     }
 
+//
+//    @Override
+//    public void describeMismatchSafely(HtmlElement item, Description mismatchDescription) {
+//        mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
+//    }
+
     @Override
     protected boolean matchesSafely(HtmlFragment html) {
+        if (!html.exists()) return false;
         for (HtmlElement e : html.elements()) {
             if (matcher.matches(e)) return true;
         }

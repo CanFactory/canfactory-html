@@ -18,9 +18,10 @@ import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 
-public class HasCount extends BaseHtmlMatcher<HtmlFragment> {
+public class HasCount extends TypeSafeMatcher<HtmlFragment> {
     private int expectedCount;
 
     public HasCount(int expectedCount) {

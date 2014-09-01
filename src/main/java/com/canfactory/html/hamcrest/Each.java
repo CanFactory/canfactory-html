@@ -15,15 +15,38 @@
 package com.canfactory.html.hamcrest;
 
 import com.canfactory.html.HtmlElement;
+import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
+import org.hamcrest.Factory;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public abstract class BaseHtmlMatcher extends TypeSafeMatcher<HtmlElement> {
+// all must match
+public class Each extends TypeSafeMatcher<HtmlFragment> {
 
-    @Override
-    public void describeMismatchSafely(HtmlElement item, Description mismatchDescription) {
-        mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
+    private Matcher<HtmlElement> matcher;
+
+    public Each(Matcher<HtmlElement> matcher) {
+        this.matcher = matcher;
     }
 
+    @Factory
+    public static Matcher<HtmlFragment> each(Matcher<HtmlElement> matcher) {
+        return new Each(matcher);
+    }
+
+    @Override
+    public void describeTo(Description description) {
+    }
+
+    @Override
+    protected boolean matchesSafely(HtmlFragment html) {
+        if (!html.exists()) return false;
+        for (HtmlElement e : html.elements()) {
+            if (!matcher.matches(e)) return false;
+        }
+        return true;
+    }
 }
+
 

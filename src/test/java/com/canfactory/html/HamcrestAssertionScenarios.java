@@ -18,6 +18,7 @@ import com.canfactory.html.Attributes.Attribute;
 import org.testng.annotations.Test;
 
 import static com.canfactory.html.hamcrest.Any.any;
+import static com.canfactory.html.hamcrest.Each.each;
 import static com.canfactory.html.hamcrest.HasAttribute.hasAttribute;
 import static com.canfactory.html.hamcrest.HasAttribute.hasAttributes;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
@@ -26,6 +27,7 @@ import static com.canfactory.html.hamcrest.HasCount.hasCount;
 import static com.canfactory.html.hamcrest.HasElement.exists;
 import static com.canfactory.html.hamcrest.HasId.hasId;
 import static com.canfactory.html.hamcrest.HasText.hasText;
+import static com.canfactory.html.hamcrest.None.none;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
 
@@ -35,14 +37,18 @@ public class HamcrestAssertionScenarios {
     public void shouldAssertHasText() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertThat(fragment.all("li"), not(hasText("Green")));
-
-
-      //  assertThat(fragment.all("li"), all(hasText("Green")));
-
+        //
+        assertThat(fragment.all("#colours"), each(hasText("Colour")));
         assertThat(fragment.all("li"), any(hasText("Green")));
+        assertThat(fragment.all("li"), none(hasText("pink")));
+
+        // check the empty condition - todo, these need pulling out into a seperate test as they should all fail
+       // assertThat( HtmlElement.Factory.fromString(""), each(hasText("Colour")));
+     //  assertThat( HtmlElement.Factory.fromString(""), any(hasText("Colour")));
+      //  assertThat( HtmlElement.Factory.fromString(""), none(hasText("Colour")));
+
+
         assertThat(fragment.nth(2, "li"), hasText("Green"));
-        assertThat(fragment.all("li"), not(hasText("pink")));
     }
 
     public void shouldAssertHasAttribute() {

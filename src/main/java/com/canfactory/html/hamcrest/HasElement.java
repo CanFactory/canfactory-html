@@ -18,9 +18,10 @@ import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 
-public class HasElement extends BaseHtmlMatcher<HtmlFragment> {
+public class HasElement extends TypeSafeMatcher<HtmlFragment> {
 
     public HasElement() {
     }
@@ -32,7 +33,7 @@ public class HasElement extends BaseHtmlMatcher<HtmlFragment> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("The HtmlElement is missing (empty)");
+        description.appendText("The html is missing (empty)");
     }
 
     @Override
