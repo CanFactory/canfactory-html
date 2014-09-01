@@ -35,9 +35,6 @@ public interface HtmlElement extends BaseHtml {
 
     Attributes attributes();
 
-    HtmlElements elements();    // todo - should be contrained to a single eleennt
-
-
     public static class Factory {
         public static HtmlElement fromStream(InputStream is) {
             if (is != null) {

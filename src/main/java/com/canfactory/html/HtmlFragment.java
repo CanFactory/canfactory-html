@@ -32,7 +32,26 @@ import java.io.InputStream;
  */
 public interface HtmlFragment extends BaseHtml {
 
-  //  HtmlElements elements();
+    // container ??
+    boolean exists();
+
+    // ???
+    HtmlElements elements();
+
+    // seacrhing
+
+    HtmlElement first(String cssSelector);
+
+    HtmlElement nth(int index, String cssSelector);
+
+    HtmlElement last(String cssSelector);
+
+    HtmlFragment all(String cssSelector);
+
+    String text();
+
+    String outerHtml();
+
 
     public static class Factory {
         public static HtmlFragment fromStream(InputStream is) {

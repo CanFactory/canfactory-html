@@ -124,7 +124,7 @@ public class ExtantHtmlFragment implements HtmlFragment {
             results.add(HtmlElement.Factory.fromElement(ele));
 
         }
-        return new HtmlElements(results);
+        return HtmlElements.Factory.fromList(results);
     }
 
     @Override

@@ -65,6 +65,6 @@ public class EmptyHtmlElement implements HtmlElement {
 
     @Override
     public HtmlElements elements() {
-        return HtmlElements.EMPTY;
+        return HtmlElements.Factory.empty();
     }
 }

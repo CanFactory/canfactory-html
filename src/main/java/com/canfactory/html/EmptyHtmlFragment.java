@@ -49,7 +49,7 @@ public class EmptyHtmlFragment implements HtmlFragment {
 
     @Override
     public HtmlElements elements() {
-        return HtmlElements.EMPTY;
+        return HtmlElements.Factory.empty();
     }
 
     @Override
