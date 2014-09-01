@@ -12,9 +12,11 @@
 // the program(s) have been supplied.
 //-----------------------------------------------------------------------
 
-package com.canfactory.html;
+package com.canfactory.html.hamcrest;
 
 import com.canfactory.html.Attributes.Attribute;
+import com.canfactory.html.HtmlElement;
+import com.canfactory.html.HtmlFragment;
 import org.testng.annotations.Test;
 
 import static com.canfactory.html.hamcrest.Any.any;
@@ -23,7 +25,6 @@ import static com.canfactory.html.hamcrest.HasAttribute.hasAttribute;
 import static com.canfactory.html.hamcrest.HasAttribute.hasAttributes;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
 import static com.canfactory.html.hamcrest.HasClass.hasClasses;
-import static com.canfactory.html.hamcrest.HasCount.hasCount;
 import static com.canfactory.html.hamcrest.HasElement.exists;
 import static com.canfactory.html.hamcrest.HasId.hasId;
 import static com.canfactory.html.hamcrest.HasText.hasText;
@@ -32,23 +33,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
 
 @Test
-public class HamcrestAssertionScenarios {
+public class HtmlElementMatcherScenarios {
 
     public void shouldAssertHasText() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        //
+        // check over many using the each , any and none group matchers
         assertThat(fragment.all("#colours"), each(hasText("Colour")));
         assertThat(fragment.all("li"), any(hasText("Green")));
-        assertThat(fragment.all("li"), none(hasText("pink")));
+        assertThat(fragment.all("li"), none(hasText("Pink")));
 
-        // check the empty condition - todo, these need pulling out into a seperate test as they should all fail
-       // assertThat( HtmlElement.Factory.fromString(""), each(hasText("Colour")));
-     //  assertThat( HtmlElement.Factory.fromString(""), any(hasText("Colour")));
-      //  assertThat( HtmlElement.Factory.fromString(""), none(hasText("Colour")));
-
-
+        // asserting a single element
+        assertThat(fragment.first("ul li"), hasText("Red"));
         assertThat(fragment.nth(2, "li"), hasText("Green"));
+        assertThat(fragment.last("#colours"), hasText("Blue"));
+
     }
 
     public void shouldAssertHasAttribute() {
@@ -101,13 +100,6 @@ public class HamcrestAssertionScenarios {
         assertThat(elementWithNoId, not(hasId("component-with-no-id")));
     }
 
-    public void shouldAssertCount() {
-        HtmlFragment fragment = loadExample("simple-lists.html");
-
-        assertThat(fragment.all("ul"), hasCount(4));
-        assertThat(fragment.all("#colours li"), hasCount(3));
-        assertThat(fragment.all("li"), not(hasCount(0)));
-    }
 
     public void shouldExist() {
         assertThat(HtmlElement.Factory.fromString("<p>Lorem Ipsum...</p>"), exists());

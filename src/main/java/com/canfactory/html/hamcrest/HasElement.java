@@ -33,7 +33,7 @@ public class HasElement extends TypeSafeMatcher<HtmlFragment> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("The html is missing (empty)");
+        description.appendText("An html element or fragment with content");
     }
 
     @Override

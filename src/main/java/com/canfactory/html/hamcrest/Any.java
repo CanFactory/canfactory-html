@@ -35,15 +35,15 @@ public class Any extends TypeSafeMatcher<HtmlFragment> {
         return new Any(matcher);
     }
 
+
     @Override
     public void describeTo(Description description) {
+        description.appendText("Failed to match condition for any element in the fragment.");
+        description.appendText("\nThe failed match is below:\n");
+        description.appendDescriptionOf(matcher);
     }
 
-//
-//    @Override
-//    public void describeMismatchSafely(HtmlElement item, Description mismatchDescription) {
-//        mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
-//    }
+
 
     @Override
     protected boolean matchesSafely(HtmlFragment html) {

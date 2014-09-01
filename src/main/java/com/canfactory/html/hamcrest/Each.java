@@ -24,6 +24,7 @@ import org.hamcrest.TypeSafeMatcher;
 // all must match
 public class Each extends TypeSafeMatcher<HtmlFragment> {
 
+    private int index;
     private Matcher<HtmlElement> matcher;
 
     public Each(Matcher<HtmlElement> matcher) {
@@ -37,13 +38,20 @@ public class Each extends TypeSafeMatcher<HtmlFragment> {
 
     @Override
     public void describeTo(Description description) {
+        description.appendText("Failed to match condition at element " + index + " in the fragment.");
+        description.appendText("\nThe failed match is below:\n");
+        description.appendDescriptionOf(matcher);
     }
 
     @Override
     protected boolean matchesSafely(HtmlFragment html) {
         if (!html.exists()) return false;
+
+        index = 1;
         for (HtmlElement e : html.elements()) {
             if (!matcher.matches(e)) return false;
+            index++;
+
         }
         return true;
     }

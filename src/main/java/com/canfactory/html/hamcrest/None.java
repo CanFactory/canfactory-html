@@ -23,8 +23,8 @@ import org.hamcrest.TypeSafeMatcher;
 
 // none must match
 public class None extends TypeSafeMatcher<HtmlFragment> {
-
     private Matcher<HtmlElement> matcher;
+    private int index;
 
     public None(Matcher<HtmlElement> matcher) {
         this.matcher = matcher;
@@ -35,15 +35,22 @@ public class None extends TypeSafeMatcher<HtmlFragment> {
         return new None(matcher);
     }
 
+
     @Override
     public void describeTo(Description description) {
+        description.appendText("Found unexpected match at element " + index + " in the fragment.");
+        description.appendText("\nThe unexpected match is below:\n");
+        description.appendDescriptionOf(matcher);
     }
 
     @Override
     protected boolean matchesSafely(HtmlFragment html) {
         if (!html.exists()) return false;
+
+        index = 1;
         for (HtmlElement e : html.elements()) {
             if (matcher.matches(e)) return false;
+            index++;
         }
         return true;
     }

@@ -35,7 +35,7 @@ public class HasCount extends TypeSafeMatcher<HtmlFragment> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("An HtmlFragment with").appendValue(expectedCount).appendText(" child elements");
+        description.appendText("An HtmlFragment with").appendValue(expectedCount).appendText(" elements");
     }
 
     @Override

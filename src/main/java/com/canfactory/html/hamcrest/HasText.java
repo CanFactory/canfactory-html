@@ -34,35 +34,12 @@ public class HasText extends BaseHtmlMatcher {
 
     @Override
     public void describeTo(Description description) {
-     //   if (isFragment()) {
-            description.appendText("An HtmlFragment where all elements contained the text ").appendValue(expectedText);
-   //     } else {
-   //         description.appendText("An HtmlElement containing the text ").appendValue(expectedText);
-   //     }
+        description.appendText("An HtmlElement containing the text ").appendValue(expectedText);
     }
-//
-//    @Override
-//    protected boolean matchesSafely(HtmlElement html) {
-//        checkType(html);
-//        if (isElement()) {
-//            return html.text().contains(expectedText);
-//        } else {
-//            HtmlElements elements = html.elements();
-//            for (HtmlElement e : elements) {
-//                if (!e.text().contains(expectedText)) {
-//                    return false;
-//                }
-//            }
-//            return true;
-//        }
-//    }
-
 
     @Override
     protected boolean matchesSafely(HtmlElement html) {
-
-            return html.text().contains(expectedText);
-
+        return html.text().contains(expectedText);
     }
 }
 
