@@ -26,14 +26,12 @@ public abstract class BaseHtmlElementMatcher extends TypeSafeMatcher<HtmlElement
         mismatchDescription.appendText("The actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
     }
 
-
     // the description for an unexpected successful match  (see None for an example)
     public void describeMatchSafely(Description matchDescription) {
         if (elementToMatch != null) {
             matchDescription.appendText("The matched html was \n\"").appendText(elementToMatch.outerHtml()).appendText("\"");
         }
     }
-
 
     // subclasses should call this as first line in their match method so that reporting on unexpected successful matches is correct
     protected void matchingOn(HtmlElement element) {
