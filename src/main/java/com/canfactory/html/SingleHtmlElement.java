@@ -18,15 +18,15 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SingleHtmlElement implements HtmlElements {
-    private HtmlElement e;
+    private HtmlElement element;
 
-    public SingleHtmlElement(HtmlElement e) {
-        this.e = e;
+    public SingleHtmlElement(HtmlElement element) {
+        this.element = element;
     }
 
     @Override
     public Iterator<HtmlElement> iterator() {
-        return new SingleItemIter(e);
+        return new SingleItemIter(element);
     }
 
     @Override
@@ -61,7 +61,5 @@ public class SingleHtmlElement implements HtmlElements {
             throw new RuntimeException("not supported");
         }
     }
-
-    ;
 
 }

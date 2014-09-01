@@ -30,15 +30,16 @@ import java.io.InputStream;
  * objects, so they can safely chained. This is kind of a crude implementation of the Option<HtmlFragment> that would be
  * possible in Java 8.
  */
-public interface HtmlFragment extends BaseHtml {
+public interface HtmlFragment {
 
-    // container ??
+    // about the container ?? - these are ideally not part of the public API , then are only needed
+    // to manipulate the collection
     boolean exists();
 
-    // ???
     HtmlElements elements();
 
-    // seacrhing
+
+    // about searching / selecting
 
     HtmlElement first(String cssSelector);
 
@@ -47,6 +48,8 @@ public interface HtmlFragment extends BaseHtml {
     HtmlElement last(String cssSelector);
 
     HtmlFragment all(String cssSelector);
+
+    // information on the html
 
     String text();
 

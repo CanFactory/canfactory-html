@@ -14,23 +14,23 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.BaseHtml;
 import com.canfactory.html.HtmlElement;
+import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 // a short circuit style match
-public class Any extends BaseHtmlMatcher<BaseHtml> {
+public class Any extends BaseHtmlMatcher<HtmlFragment> {
 
-    private Matcher<BaseHtml> matcher;
+    private Matcher<HtmlFragment> matcher;
 
-    public Any(Matcher<BaseHtml> matcher) {
+    public Any(Matcher<HtmlFragment> matcher) {
         this.matcher = matcher;
     }
 
     @Factory
-    public static Matcher<BaseHtml> any(Matcher<BaseHtml> matcher) {
+    public static Matcher<HtmlFragment> any(Matcher<HtmlFragment> matcher) {
         return new Any(matcher);
     }
 
@@ -39,7 +39,7 @@ public class Any extends BaseHtmlMatcher<BaseHtml> {
     }
 
     @Override
-    protected boolean matchesSafely(BaseHtml html) {
+    protected boolean matchesSafely(HtmlFragment html) {
         for (HtmlElement e : html.elements()) {
             if (matcher.matches(e)) return true;
         }

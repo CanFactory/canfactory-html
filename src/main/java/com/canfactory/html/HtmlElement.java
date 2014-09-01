@@ -21,9 +21,8 @@ import java.io.InputStream;
 
 
 /**
- * Represents an HtmlElement, i.e. part of the page.
- * <p/>
- * It may have just 1 root node.
+ * Represents an HtmlElement, i.e. part of the page. This is essentially an HtmlFragment for which we know there is
+ * just 1 root node.
  * <p/>
  * To allow easy chaining of methods without worrying about null pointer exceptions two implementation are provided.
  * {@link com.canfactory.html.ExtantHtmlElement} represents a valid element with data, whereas
@@ -31,7 +30,7 @@ import java.io.InputStream;
  * objects, so they can safely chained. This is kind of a crude implementation of the Option<HtmlElement> that would be
  * possible in Java 8.
  */
-public interface HtmlElement extends BaseHtml {
+public interface HtmlElement extends HtmlFragment {
 
     Attributes attributes();
 

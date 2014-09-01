@@ -14,15 +14,33 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.BaseHtml;
+import com.canfactory.html.HtmlElement;
+import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
-public abstract class BaseHtmlMatcher<T extends BaseHtml> extends TypeSafeMatcher<T> {
+public abstract class BaseHtmlMatcher<T extends HtmlFragment> extends TypeSafeMatcher<T> {
+    private boolean isElement;
+
     @Override
     public void describeMismatchSafely(T item, Description mismatchDescription) {
         mismatchDescription.appendText("the actual html was \n\"").appendText(item.outerHtml()).appendText("\"");
     }
-}
 
+    protected boolean isFragment() {
+        return !isElement;
+    }
+
+
+    protected boolean isElement() {
+        return isElement;
+    }
+
+
+    protected void checkType(T html) {
+        if (html instanceof HtmlElement) {
+            isElement = true;
+        }
+    }
+}
 

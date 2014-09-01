@@ -36,6 +36,10 @@ public class HamcrestAssertionScenarios {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
         assertThat(fragment.all("li"), not(hasText("Green")));
+
+
+      //  assertThat(fragment.all("li"), all(hasText("Green")));
+
         assertThat(fragment.all("li"), any(hasText("Green")));
         assertThat(fragment.nth(2, "li"), hasText("Green"));
         assertThat(fragment.all("li"), not(hasText("pink")));
