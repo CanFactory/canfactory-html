@@ -38,8 +38,6 @@ public class HasClass extends BaseHtmlElementMatcher {
         return new HasClass(Arrays.asList(expectedClasses));
     }
 
-
-    @Override
     public void describeTo(Description description) {
         String classes = null;
         for (String c : expectedClasses) {

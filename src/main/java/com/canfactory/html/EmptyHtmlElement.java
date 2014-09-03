@@ -19,76 +19,63 @@ package com.canfactory.html;
  * chained without caring about null pointer exceptions.
  */
 public class EmptyHtmlElement implements HtmlElement {
+
     private static String EMPTY = "";
-    private static Attributes ATTRS = Attributes.build().end();
+    private static Attributes ATTRIBUTES = Attributes.build().end();
     public static HtmlElement INSTANCE = new EmptyHtmlElement();
 
-    @Override
     public boolean exists() {
         return false;
     }
 
-    @Override
     public HtmlElement first(String cssSelector) {
         return INSTANCE;
     }
 
-    @Override
     public HtmlElement nth(int index, String cssSelector) {
         return INSTANCE;
     }
 
-    @Override
     public HtmlElement last(String cssSelector) {
         return INSTANCE;
     }
 
-    @Override
     public HtmlFragment all(String cssSelector) {
         return EmptyHtmlFragment.INSTANCE;
     }
 
-    @Override
     public HtmlFragment all(Selector selector) {
          return EmptyHtmlFragment.INSTANCE;
     }
 
-    @Override
     public HtmlElement first(Selector selector) {
         return INSTANCE;
     }
 
-    @Override
     public HtmlElement nth(int index, Selector selector) {
         return INSTANCE;
     }
 
-    @Override
     public HtmlElement last(Selector selector) {
         return INSTANCE;
     }
 
-    @Override
     public String text() {
         return EMPTY;
     }
 
-    @Override
     public String outerHtml() {
         return EMPTY;
     }
 
-    @Override
     public Attributes attributes() {
-        return ATTRS;
+        return ATTRIBUTES;
     }
 
-    @Override
     public String tagName() {
         return null;
     }
 
-    @Override
     public HtmlElements elements() {
         return HtmlElements.Factory.empty();
     }

@@ -21,7 +21,7 @@ import org.hamcrest.StringDescription;
 import org.hamcrest.TypeSafeMatcher;
 import org.testng.annotations.Test;
 
-import static com.canfactory.html.hamcrest.HasCount.hasCount;
+import static com.canfactory.html.hamcrest.Count.count;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
 import static org.testng.Assert.assertEquals;
@@ -38,7 +38,6 @@ public class HtmlFragmentMatcherScenarios {
         assertFalse(new Each(new SimpleTextMatcher("Item 1")).matchesSafely(fragment));
         assertFalse(new Each(new SimpleTextMatcher("Not found")).matchesSafely(fragment));
     }
-
 
     public void shouldAlwaysFailEachForAnEmptyFragment() {
         HtmlFragment fragment = HtmlFragment.Factory.fromString("");
@@ -64,7 +63,6 @@ public class HtmlFragmentMatcherScenarios {
         assertTrue(new Any(new SimpleTextMatcher("Item 1")).matchesSafely(fragment));
         assertFalse(new Any(new SimpleTextMatcher("Not found")).matchesSafely(fragment));
     }
-
 
     public void shouldAlwaysFailAnyForAnEmptyFragment() {
         HtmlFragment fragment = HtmlFragment.Factory.fromString("");
@@ -98,7 +96,7 @@ public class HtmlFragmentMatcherScenarios {
         assertFalse(new None(new SimpleTextMatcher("Not found")).matchesSafely(fragment));
     }
 
-    public void shouldCreateGoodDescriptionIfNoneMatchFails() {
+    public void shouldCreateGoodDescriptionIfNoMatchFails() {
         None none = new None(new SimpleTextMatcher("One"));
         none.matchesSafely(HtmlFragment.Factory.fromString("<li>One</li><li>Two</li>"));
         Description description = new StringDescription();
@@ -106,39 +104,19 @@ public class HtmlFragmentMatcherScenarios {
 
         assertEquals(description.toString(), "Found unexpected match at element 1 in the fragment.\n" +
                 "The unexpected match is below:\n" +
-                "Failed to find \"One\"");
+                "not Failed to find \"One\"");
     }
 
 
     public void shouldAssertCount() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertThat(fragment.all("ul"), hasCount(4));
-        assertThat(fragment.all("#colours li"), hasCount(3));
-        assertThat(fragment.all("li"), not(hasCount(0)));
+        assertThat(fragment.all("ul"), count(4));
+        assertThat(fragment.all("#colours li"), count(3));
+        assertThat(fragment.all("li"), not(count(0)));
     }
-
 
     private HtmlFragment loadExample(String exampleFileName) {
         return HtmlFragment.Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/" + exampleFileName));
-    }
-
-
-    private static class SimpleTextMatcher extends TypeSafeMatcher<HtmlElement> {
-        private String text;
-
-        public SimpleTextMatcher(String text) {
-            this.text = text;
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("Failed to find ").appendValue(text);
-        }
-
-        @Override
-        protected boolean matchesSafely(HtmlElement htmlElement) {
-            return htmlElement.text().contains(text);
-        }
     }
 }

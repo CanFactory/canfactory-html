@@ -19,6 +19,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 public abstract class BaseHtmlElementMatcher extends TypeSafeMatcher<HtmlElement> {
+
     private HtmlElement elementToMatch;
 
     @Override
@@ -37,6 +38,4 @@ public abstract class BaseHtmlElementMatcher extends TypeSafeMatcher<HtmlElement
     protected void matchingOn(HtmlElement element) {
         this.elementToMatch = element;
     }
-
 }
-

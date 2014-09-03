@@ -18,35 +18,33 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SingleHtmlElement implements HtmlElements {
+
     private HtmlElement element;
 
     public SingleHtmlElement(HtmlElement element) {
         this.element = element;
     }
 
-    @Override
     public Iterator<HtmlElement> iterator() {
         return new SingleItemIter(element);
     }
 
-    @Override
     public int size() {
         return 1;
     }
 
     public static class SingleItemIter implements Iterator<HtmlElement> {
+
         private HtmlElement item;
 
         SingleItemIter(HtmlElement item) {
             this.item = item;
         }
 
-        @Override
         public boolean hasNext() {
             return item != null;
         }
 
-        @Override
         public HtmlElement next() {
             if (item != null) {
                 HtmlElement ret = item;
@@ -56,10 +54,8 @@ public class SingleHtmlElement implements HtmlElements {
             throw new NoSuchElementException();
         }
 
-        @Override
         public void remove() {
             throw new RuntimeException("not supported");
         }
     }
-
 }

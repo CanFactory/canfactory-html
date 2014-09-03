@@ -23,7 +23,8 @@ import java.io.InputStream;
  * on {@link com.canfactory.html.HtmlElement.Factory} to create instances.
  */
 public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement {
-    private Attributes attrs;
+
+    private Attributes attributes;
 
     ExtantHtmlElement(String html) {
         super(html);
@@ -46,61 +47,24 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
     }
 
     @Override
-    public HtmlElement nth(int index, String cssSelector) {
-        return super.nth(index, cssSelector);
-    }
-
-    @Override
-    public HtmlElement last(String cssSelector) {
-        return super.last(cssSelector);
-    }
-
-    @Override
-    public HtmlElement first(String cssSelector) {
-        return super.first(cssSelector);
-    }
-
-    @Override
-    public HtmlFragment all(String cssSelector) {
-        return super.all(cssSelector);
-    }
-
-    @Override
     public HtmlFragment all(Selector selector) {
         return null;
     }
 
-    @Override
-    public String text() {
-        return super.text();
-    }
-
-    @Override
-    public String outerHtml() {
-        if (elements != null) {
-            return elements.outerHtml();
-        } else {
-            return doc.select("body > *").outerHtml();
-        }
-    }
-
-    @Override
     public Attributes attributes() {
-        if (attrs == null) {
-            Element e = firstElement();
-            attrs = new Attributes(firstElement().attributes());
+        if (attributes == null) {
+            attributes = new Attributes(firstElement().attributes());
         }
-        return attrs;
+        return attributes;
     }
 
-    @Override
     public String tagName() {
         return firstElement().tagName();
     }
 
     private void assertValidContent() {
-        if (doc != null) {
-            if (doc.select("body > *").size() != 1) {
+        if (document != null) {
+            if (document.select("body > *").size() != 1) {
                 throw new RuntimeException("This is not a valid HtmlElement - there must be a single root element");
             } else {
                 return;

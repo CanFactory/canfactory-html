@@ -21,6 +21,7 @@ import org.hamcrest.Matcher;
 
 
 public class HasText extends BaseHtmlElementMatcher {
+
     private String expectedText;
 
     public HasText(String text) {
@@ -32,7 +33,6 @@ public class HasText extends BaseHtmlElementMatcher {
         return new HasText(text);
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("An HtmlElement containing the text ").appendValue(expectedText);
     }

@@ -26,9 +26,11 @@ import java.util.List;
  * Add more methods as required.
  */
 public interface HtmlElements extends Iterable<HtmlElement> {
+
     int size();
 
     public static class Factory {
+
         static HtmlElements EMPTY = new ManyHtmlElements(new ArrayList<HtmlElement>(0));
 
         public static HtmlElements fromList(List<HtmlElement> elements) {
@@ -63,5 +65,4 @@ public interface HtmlElements extends Iterable<HtmlElement> {
             return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
         }
     }
-
 }

@@ -12,13 +12,26 @@
 // the program(s) have been supplied.
 //-----------------------------------------------------------------------
 
-package com.canfactory.html;
+package com.canfactory.html.hamcrest;
 
-/**
- * Represents a fully formed and valid HTML page
- */
-public class HtmPage extends ExtantHtmlFragment {
-    public HtmPage(String html) {
-        super(html);
+import com.canfactory.html.HtmlElement;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
+
+public class SimpleTextMatcher extends TypeSafeMatcher<HtmlElement> {
+
+    private String text;
+
+    public SimpleTextMatcher(String text) {
+        this.text = text;
+    }
+
+    public void describeTo(Description description) {
+        description.appendText("Failed to find ").appendValue(text);
+    }
+
+    @Override
+    protected boolean matchesSafely(HtmlElement htmlElement) {
+        return htmlElement.text().contains(text);
     }
 }

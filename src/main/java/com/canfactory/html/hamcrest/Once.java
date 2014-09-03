@@ -14,28 +14,45 @@
 
 package com.canfactory.html.hamcrest;
 
+import com.canfactory.html.HtmlElement;
 import com.canfactory.html.HtmlFragment;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import static java.lang.String.format;
 
-public class HasElement extends TypeSafeMatcher<HtmlFragment> {
+public class Once extends TypeSafeMatcher<HtmlFragment> {
 
-    @Factory
-    public static Matcher<HtmlFragment> exists() {
-        return new HasElement();
+    private Matcher<HtmlElement> matcher;
+    private int matches;
+
+    public Once(Matcher<HtmlElement> matcher) {
+        this.matcher = matcher;
     }
 
-    public void describeTo(Description description) {
-        description.appendText("An html element or fragment with content");
+    @Factory
+    public static Matcher<HtmlFragment> once(Matcher<HtmlElement> matcher) {
+        return new Once(matcher);
     }
 
     @Override
     protected boolean matchesSafely(HtmlFragment html) {
-        return html.exists();
+        if (!html.exists()) {
+            return false;
+        }
+
+        for (HtmlElement element : html.elements()) {
+            if (matcher.matches(element)) {
+                matches++;
+            }
+        }
+
+        return matches == 1;
+    }
+
+    public void describeTo(Description description) {
+        description.appendText(format("Failed to match once for any element in the fragment, instead matched %d time%s.\n", matches, matches == 1 ? "" : "s")).appendDescriptionOf(matcher);
     }
 }
-
-

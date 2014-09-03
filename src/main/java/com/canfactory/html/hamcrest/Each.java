@@ -36,7 +36,6 @@ public class Each extends TypeSafeMatcher<HtmlFragment> {
         return new Each(matcher);
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("Failed to match condition at element " + index + " in the fragment.");
         description.appendText("\nThe failed match is below:\n");

@@ -31,7 +31,7 @@ public class HtmlMatcher {
 
     // Does this outerHtml contain the expected text
     public MatchResult containsText(String expectedText) {
-        for (Element ele : html.doc.body().getAllElements()) {
+        for (Element ele : html.document.body().getAllElements()) {
             if (ele.hasText() && ele.text().contains(expectedText)) {
                 return MatchResult.success();
             }

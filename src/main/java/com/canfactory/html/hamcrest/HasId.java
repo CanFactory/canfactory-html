@@ -37,7 +37,6 @@ public class HasId extends BaseHtmlElementMatcher {
         return html.attributes().value("id").equals(expectedId);
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("An HtmlElement with the ID ").appendValue(expectedId);
     }

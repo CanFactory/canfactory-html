@@ -49,7 +49,6 @@ public class HasAttribute extends BaseHtmlElementMatcher {
         return new HasAttribute(Arrays.asList(attributes));
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("An HtmlElement containing the attribute ").appendValue(expectedAttributes);
     }

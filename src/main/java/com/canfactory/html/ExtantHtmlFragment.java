@@ -30,19 +30,20 @@ import java.util.List;
  * on {@link com.canfactory.html.HtmlFragment.Factory} to create instances.
  */
 public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragment {
-    protected Document doc;
+
+    protected Document document;
     protected Elements elements;
 
     ExtantHtmlFragment(String html) {
-        doc = Jsoup.parse(html);
+        document = Jsoup.parse(html);
     }
 
     ExtantHtmlFragment(Document jsoup) {
-        this.doc = jsoup;
+        this.document = jsoup;
     }
 
     ExtantHtmlFragment(Element element) {
-        this.doc = Jsoup.parse(element.outerHtml());
+        this.document = Jsoup.parse(element.outerHtml());
     }
 
     ExtantHtmlFragment(Elements elements) {
@@ -51,31 +52,32 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
 
     protected ExtantHtmlFragment(InputStream is) {
         try {
-            doc = Jsoup.parse(is, "UTF-8", "http://example.com/");
+            document = Jsoup.parse(is, "UTF-8", "http://example.com/");
         } catch (IOException ioex) {
             throw new RuntimeException(ioex);
         }
     }
 
+    protected Document jsoupDoc() {
+        if (elements != null) {
+            return Jsoup.parse(elements.outerHtml());
+        } else {
+            return document;
+        }
+    }
+
     protected Element firstElement() {
+        return allElements().first();
+    }
+
+    protected Elements allElements() {
         if (elements != null) {
-            return elements.get(0);
+             return elements;
         } else {
-            // there should be a neater way?
-            return doc.select("body > *").first();
+            return document.select("body > *");
         }
     }
 
-    protected Elements allJSoupElements() {
-        if (elements != null) {
-            return elements;
-        } else {
-            return doc.getAllElements();
-        }
-    }
-
-
-    @Override
     public boolean exists() {
         return true;
     }
@@ -84,10 +86,9 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         return nth(1, cssSelector);
     }
 
-    @Override
     public HtmlElement nth(int index, String cssSelector) {
         if (index <= 0) throw new IllegalArgumentException("Index must be one based");
-        Elements matched = allJSoupElements().select(cssSelector);
+        Elements matched = jsoupDoc().select(cssSelector);
         if (matched.size() >= index && index > 0) {
             return new ExtantHtmlElement(matched.get(index - 1).outerHtml());
         } else {
@@ -95,9 +96,8 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    @Override
     public HtmlElement last(String cssSelector) {
-        Elements matched = allJSoupElements().select(cssSelector);
+        Elements matched = jsoupDoc().select(cssSelector);
         if (matched.size() > 0) {
             return new ExtantHtmlElement(matched.get(matched.size() - 1).outerHtml());
         } else {
@@ -105,19 +105,17 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    @Override
     public HtmlFragment all(String cssSelector) {
-        Elements matched = allJSoupElements().select(cssSelector);
+        Elements matched = jsoupDoc().select(cssSelector);
         return HtmlFragment.Factory.fromElements(matched);
     }
 
-    @Override
     public HtmlFragment all(Selector selector) {
         Elements elementsToTest;
         if (elements != null) {
             elementsToTest = elements;
         } else {
-            elementsToTest = doc.select("body > *");
+            elementsToTest = document.select("body > *");
         }
 
         List<Element> accumulator = new ArrayList<Element>();
@@ -127,7 +125,6 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         return HtmlFragment.Factory.fromElements(new Elements(accumulator));
     }
 
-    @Override
     public HtmlElement first(Selector selector) {
         HtmlElements all = all(selector).elements();
         if (all.size() > 0) {
@@ -137,7 +134,6 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    @Override
     public HtmlElement nth(int index, Selector selector) {
         if (index <= 0) throw new IllegalArgumentException("Index must be one based");
         HtmlElements all = all(selector).elements();
@@ -150,7 +146,6 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    @Override
     public HtmlElement last(Selector selector) {
         HtmlElements all = all(selector).elements();
         if (all.size() > 0) {
@@ -169,14 +164,8 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    @Override
     public HtmlElements elements() {
-        Elements e;
-        if (elements != null) {
-            e = elements;
-        } else {
-            e = doc.select("body > *");
-        }
+        Elements e = allElements();
 
         List<HtmlElement> results = new ArrayList<HtmlElement>(e.size());
         for (Element ele : e) {
@@ -185,27 +174,20 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         return HtmlElements.Factory.fromList(results);
     }
 
-    @Override
     public String text() {
-        if (doc != null) {
-            return doc.text();
+        if (document != null) {
+            return document.text();
         } else {
             return elements.text();
         }
     }
 
-    @Override
     public String outerHtml() {
-        if (elements != null) {
-            return elements.outerHtml();
-        } else {
-            return doc.select("body > *").outerHtml();
-        }
+        return allElements().outerHtml();
     }
 
     @Override
     public String toString() {
         return "An HtmFragment of\n" + outerHtml();
     }
-
 }

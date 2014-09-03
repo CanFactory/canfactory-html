@@ -21,19 +21,19 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 
-public class HasCount extends TypeSafeMatcher<HtmlFragment> {
+public class Count extends TypeSafeMatcher<HtmlFragment> {
+
     private int expectedCount;
 
-    public HasCount(int expectedCount) {
+    public Count(int expectedCount) {
         this.expectedCount = expectedCount;
     }
 
     @Factory
-    public static Matcher<HtmlFragment> hasCount(int expectedCount) {
-        return new HasCount(expectedCount);
+    public static Matcher<HtmlFragment> count(int expectedCount) {
+        return new Count(expectedCount);
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("An HtmlFragment with").appendValue(expectedCount).appendText(" elements");
     }

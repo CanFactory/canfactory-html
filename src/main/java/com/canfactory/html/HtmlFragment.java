@@ -64,14 +64,12 @@ public interface HtmlFragment {
 
     String outerHtml();
 
-
-
     public interface Selector {
         boolean matches(HtmlElement element);
     }
 
-
     public static class Factory {
+
         public static HtmlFragment fromStream(InputStream is) {
             if (is != null) {
                 return new ExtantHtmlFragment(is);
@@ -91,9 +89,5 @@ public interface HtmlFragment {
         public static HtmlFragment fromElements(Elements elements) {
             return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
         }
-//
-//        public static HtmlFragment fromElements(List<HtmlElement> elements) {
-//            return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
-//        }
     }
 }

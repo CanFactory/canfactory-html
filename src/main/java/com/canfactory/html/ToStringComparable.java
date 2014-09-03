@@ -18,6 +18,7 @@ package com.canfactory.html;
  * A simple but inefficient equality and comparison implemented in terms of toString
  */
 public class ToStringComparable implements Comparable {
+
     private int hashCode = Integer.MIN_VALUE;
 
     @Override
@@ -36,7 +37,6 @@ public class ToStringComparable implements Comparable {
         return hashCode;
     }
 
-    @Override
     public int compareTo(Object other) {
         if (other != null && other.getClass().equals(this.getClass())) {
             return this.toString().compareTo(other.toString());

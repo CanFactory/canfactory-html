@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class ManyHtmlElements implements HtmlElements
-{
+public class ManyHtmlElements implements HtmlElements {
+
     private List<HtmlElement> data;
 
     public ManyHtmlElements(List<HtmlElement> data) {
@@ -30,7 +30,6 @@ public class ManyHtmlElements implements HtmlElements
         return data.size();
     }
 
-    @Override
     public Iterator<HtmlElement> iterator() {
         return Collections.unmodifiableList(data).iterator();
     }

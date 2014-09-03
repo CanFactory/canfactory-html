@@ -123,7 +123,7 @@ public class HtmlFragmentNavigationScenarios {
         assertEquals(fragment.all(new SimpleSelector("li")), fragment.all("li"));
         assertEquals(fragment.first(new SimpleSelector("ul")), fragment.first("ul"));
         assertEquals(fragment.nth(3, new SimpleSelector("ul")), fragment.nth(3, "ul"));
-        assertEquals(fragment.last(new SimpleSelector("li")), fragment.last("ta"));
+        assertEquals(fragment.last(new SimpleSelector("li")), fragment.last("li"));
 
         // now check empty (nothing found) scenarios
         assertFalse(fragment.all(new SimpleSelector("table")).exists());
@@ -153,7 +153,6 @@ public class HtmlFragmentNavigationScenarios {
             this.tagName = tagName;
         }
 
-        @Override
         public boolean matches(HtmlElement element) {
             return (element.tagName().equals(tagName));
         }

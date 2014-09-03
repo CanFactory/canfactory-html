@@ -23,6 +23,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 // none must match
 public class None extends TypeSafeMatcher<HtmlFragment> {
+
     private Matcher<HtmlElement> matcher;
     private int index;
     private Matcher<HtmlElement> matched;
@@ -36,7 +37,6 @@ public class None extends TypeSafeMatcher<HtmlFragment> {
         return new None(matcher);
     }
 
-    @Override
     public void describeTo(Description description) {
         description.appendText("Found unexpected match at element " + index + " in the fragment.");
 
