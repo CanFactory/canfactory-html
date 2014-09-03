@@ -14,15 +14,12 @@
 
 package com.canfactory.html.hamcrest;
 
-import com.canfactory.html.Attributes.Attribute;
 import com.canfactory.html.HtmlElement;
 import com.canfactory.html.HtmlFragment;
 import org.testng.annotations.Test;
 
 import static com.canfactory.html.hamcrest.Any.any;
 import static com.canfactory.html.hamcrest.Each.each;
-import static com.canfactory.html.hamcrest.HasAttribute.hasAttribute;
-import static com.canfactory.html.hamcrest.HasAttribute.hasAttributes;
 import static com.canfactory.html.hamcrest.HasClass.hasClass;
 import static com.canfactory.html.hamcrest.HasClass.hasClasses;
 import static com.canfactory.html.hamcrest.HasElement.exists;
@@ -50,40 +47,6 @@ public class HtmlElementMatcherScenarios {
 
     }
 
-    public void shouldAssertHasAttribute() {
-        HtmlFragment fragment = loadExample("simple-lists.html");
-
-        assertThat(fragment.first("ul"), hasAttribute("id", "colours"));
-        assertThat(fragment.first("ul"), hasAttribute(new Attribute("id", "colours")));
-        assertThat(fragment.first("ul"), not(hasAttribute("id", "numbers")));
-    }
-
-    public void shouldAssertAttributePresenceWithoutValue() {
-        HtmlFragment html = HtmlFragment.Factory.fromString("<ul><li class=\"one\">One</li><li>Two</ul>");
-
-        assertThat(html.first("li"), hasAttribute("class"));
-        assertThat(html.last("li"), not(hasAttribute("class")));
-    }
-
-    public void shouldAssertMultipleAttributes() {
-        HtmlFragment html = HtmlFragment.Factory.fromString("<p class=\"one\" lang=\"fr\" >Une</p>");
-
-        assertThat(html.first("p"), hasAttribute("class","one","lang","fr"));
-        assertThat(html.last("li"), not(hasAttribute("class")));
-    }
-
-
-    public void shouldAssertHasAttributes() {
-        HtmlElement element = HtmlElement.Factory.fromString("<p id=\"p1\" name=\"para1\"></p>");
-
-        Attribute name = new Attribute("name", "para1");
-        Attribute id = new Attribute("id", "p1");
-        assertThat(element, hasAttributes(id));
-        assertThat(element, hasAttributes(id, name));
-        assertThat(element, hasAttributes(name, id));
-        assertThat(element, not(hasAttributes(new Attribute("name", "paraX"))));
-        assertThat(element, not(hasAttributes(name, id, new Attribute("class", "classX"))));
-    }
 
 
     public void shouldAssertHasClass() {

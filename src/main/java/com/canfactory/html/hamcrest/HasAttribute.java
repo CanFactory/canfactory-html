@@ -20,35 +20,26 @@ import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class HasAttribute extends BaseHtmlElementMatcher {
-
     private List<Attribute> expectedAttributes;
 
     public HasAttribute(List<Attribute> expectedAttributes) {
         this.expectedAttributes = expectedAttributes;
     }
 
-    @Factory
-    public static Matcher<HtmlElement> hasAttribute(String name, String value) {
-        return new HasAttribute(Arrays.asList(new Attribute(name, value)));
-    }
-
-    @Factory
-    public static Matcher<HtmlElement> hasAttribute(String name, String value, String... rest) {
-
-        return new HasAttribute(Arrays.asList(new Attribute(name, value)));
-    }
 
 
     @Factory
     public static Matcher<HtmlElement> hasAttribute(String name) {
         return new HasAttribute(Arrays.asList(new Attribute(name, "")));
+    }
+
+    @Factory
+    public static Matcher<HtmlElement> hasAttribute(String name, String value) {
+        return new HasAttribute(Arrays.asList(new Attribute(name, value)));
     }
 
     @Factory
@@ -61,8 +52,20 @@ public class HasAttribute extends BaseHtmlElementMatcher {
         return new HasAttribute(Arrays.asList(attributes));
     }
 
+    @Factory
+    public static Matcher<HtmlElement> hasAttributes(String... nameValues) {
+        if (nameValues.length % 2 != 0) throw new RuntimeException("The last attr was missing a value");
+
+        List<Attribute> expectedAttrs = new ArrayList<Attribute>();
+        for (int i = 0; i < nameValues.length; i += 2) {
+            expectedAttrs.add(new Attribute(nameValues[i], nameValues[i + 1]));
+        }
+
+        return new HasAttribute(expectedAttrs);
+    }
+
     public void describeTo(Description description) {
-        description.appendText("An HtmlElement containing the attribute ").appendValue(expectedAttributes);
+        description.appendText("An HtmlElement containing the attribute(s) ").appendValue(expectedAttributes);
     }
 
     @Override
