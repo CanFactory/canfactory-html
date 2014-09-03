@@ -15,9 +15,11 @@
 package com.canfactory.html;
 
 import com.canfactory.html.HtmlFragment.Factory;
+import com.canfactory.html.HtmlFragment.Selector;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -41,12 +43,12 @@ public class HtmlFragmentNavigationScenarios {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
         assertEquals(fragment.first("ul").outerHtml(), "<ul id=\"colours\"> \n" +
-                " <li>Red</li> \n" +
-                " <li>Green</li> \n" +
-                " <li>Blue</li> \n" +
+                " <li>Colour Red</li> \n" +
+                " <li>Colour Green</li> \n" +
+                " <li>Colour Blue</li> \n" +
                 "</ul>");
 
-        assertEquals(fragment.first("li").outerHtml(), "<li>Red</li>");
+        assertEquals(fragment.first("li").outerHtml(), "<li>Colour Red</li>");
 
         assertEquals(fragment.first("ol").outerHtml(), "<ol id=\"numbers\"> \n" +
                 " <li>One</li> \n" +
@@ -66,7 +68,7 @@ public class HtmlFragmentNavigationScenarios {
     public void shouldReturnLastElementUsingSelector() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertEquals(fragment.last("#colours li").outerHtml(), "<li>Blue</li>");
+        assertEquals(fragment.last("#colours li").outerHtml(), "<li>Colour Blue</li>");
     }
 
     public void shouldReturnEmptyHtmlElementIfNoMatch() {
@@ -82,9 +84,9 @@ public class HtmlFragmentNavigationScenarios {
     public void shouldReturnAllElement() {
         HtmlFragment fragment = loadExample("simple-lists.html");
 
-        assertEquals(fragment.all("li").outerHtml(), "<li>Red</li>\n" +
-                "<li>Green</li>\n" +
-                "<li>Blue</li>\n" +
+        assertEquals(fragment.all("li").outerHtml(), "<li>Colour Red</li>\n" +
+                "<li>Colour Green</li>\n" +
+                "<li>Colour Blue</li>\n" +
                 "<li>One</li>\n" +
                 "<li>Two</li>\n" +
                 "<li>Three</li>\n" +
@@ -114,6 +116,26 @@ public class HtmlFragmentNavigationScenarios {
                 "</ul>");
     }
 
+    public void shouldReturnElementUsingSelector() {
+        HtmlFragment fragment = loadExample("simple-lists.html");
+
+        // a basic test is that the simple selector should return the same a the CSS selector
+        assertEquals(fragment.all(new SimpleSelector("li")), fragment.all("li"));
+        assertEquals(fragment.first(new SimpleSelector("ul")), fragment.first("ul"));
+        assertEquals(fragment.nth(3, new SimpleSelector("ul")), fragment.nth(3, "ul"));
+        assertEquals(fragment.last(new SimpleSelector("li")), fragment.last("ta"));
+
+        // now check empty (nothing found) scenarios
+        assertFalse(fragment.all(new SimpleSelector("table")).exists());
+        assertFalse(fragment.first(new SimpleSelector("table")).exists());
+        assertFalse(fragment.nth(1,new SimpleSelector("table")).exists());
+        assertFalse(fragment.last(new SimpleSelector("table")).exists());
+
+        // boundary checks on nth
+        assertTrue(fragment.nth(4, new SimpleSelector("ul")).exists());
+        assertFalse(fragment.nth(5, new SimpleSelector("ul")).exists());
+    }
+
     public void shouldReturnEmptyHtmlFragmentIfNoMatch() {
         HtmlFragment fragment = loadExample("sample.html");
         assertTrue(fragment.all("table") instanceof EmptyHtmlFragment);
@@ -122,5 +144,18 @@ public class HtmlFragmentNavigationScenarios {
 
     private HtmlFragment loadExample(String exampleFileName) {
         return Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/" + exampleFileName));
+    }
+
+    public static class SimpleSelector implements Selector {
+        private String tagName;
+
+        public SimpleSelector(String tagName) {
+            this.tagName = tagName;
+        }
+
+        @Override
+        public boolean matches(HtmlElement element) {
+            return (element.tagName().equals(tagName));
+        }
     }
 }

@@ -48,6 +48,26 @@ public class EmptyHtmlFragment implements HtmlFragment {
     }
 
     @Override
+    public HtmlFragment all(Selector selector) {
+        return EmptyHtmlElement.INSTANCE;
+    }
+
+    @Override
+    public HtmlElement first(Selector selector) {
+        return EmptyHtmlElement.INSTANCE;
+    }
+
+    @Override
+    public HtmlElement nth(int index, Selector selector) {
+        return EmptyHtmlElement.INSTANCE;
+    }
+
+    @Override
+    public HtmlElement last(Selector selector) {
+        return EmptyHtmlElement.INSTANCE;
+    }
+
+    @Override
     public HtmlElements elements() {
         return HtmlElements.Factory.empty();
     }

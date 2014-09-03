@@ -49,6 +49,26 @@ public class EmptyHtmlElement implements HtmlElement {
     }
 
     @Override
+    public HtmlFragment all(Selector selector) {
+         return EmptyHtmlFragment.INSTANCE;
+    }
+
+    @Override
+    public HtmlElement first(Selector selector) {
+        return INSTANCE;
+    }
+
+    @Override
+    public HtmlElement nth(int index, Selector selector) {
+        return INSTANCE;
+    }
+
+    @Override
+    public HtmlElement last(Selector selector) {
+        return INSTANCE;
+    }
+
+    @Override
     public String text() {
         return EMPTY;
     }
@@ -61,6 +81,11 @@ public class EmptyHtmlElement implements HtmlElement {
     @Override
     public Attributes attributes() {
         return ATTRS;
+    }
+
+    @Override
+    public String tagName() {
+        return null;
     }
 
     @Override

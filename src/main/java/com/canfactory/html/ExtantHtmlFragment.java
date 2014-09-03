@@ -22,13 +22,14 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * An valid (exists) {@link com.canfactory.html.HtmlFragment}. Use the static methods
  * on {@link com.canfactory.html.HtmlFragment.Factory} to create instances.
  */
-public class ExtantHtmlFragment implements HtmlFragment {
+public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragment {
     protected Document doc;
     protected Elements elements;
 
@@ -111,6 +112,64 @@ public class ExtantHtmlFragment implements HtmlFragment {
     }
 
     @Override
+    public HtmlFragment all(Selector selector) {
+        Elements elementsToTest;
+        if (elements != null) {
+            elementsToTest = elements;
+        } else {
+            elementsToTest = doc.select("body > *");
+        }
+
+        List<Element> accumulator = new ArrayList<Element>();
+        for (Element ele : elementsToTest) {
+            recursiveSelector(accumulator, selector, ele);
+        }
+        return HtmlFragment.Factory.fromElements(new Elements(accumulator));
+    }
+
+    @Override
+    public HtmlElement first(Selector selector) {
+        HtmlElements all = all(selector).elements();
+        if (all.size() > 0) {
+            return all.iterator().next();
+        } else {
+            return EmptyHtmlElement.INSTANCE;
+        }
+    }
+
+    @Override
+    public HtmlElement nth(int index, Selector selector) {
+        if (index <= 0) throw new IllegalArgumentException("Index must be one based");
+        HtmlElements all = all(selector).elements();
+        if (all.size() >= index) {
+            Iterator<HtmlElement> iter = all.iterator();
+            for (int i = 0; i < index - 1; i++) iter.next();
+            return iter.next();
+        } else {
+            return EmptyHtmlElement.INSTANCE;
+        }
+    }
+
+    @Override
+    public HtmlElement last(Selector selector) {
+        HtmlElements all = all(selector).elements();
+        if (all.size() > 0) {
+            return nth(all.size(), selector);
+        } else {
+            return EmptyHtmlElement.INSTANCE;
+        }
+    }
+
+    private void recursiveSelector(List<Element> accumulator, Selector selector, Element ele) {
+        if (selector.matches(HtmlElement.Factory.fromElement(ele))) {
+            accumulator.add(ele);
+        }
+        for (Element child : ele.children()) {
+            recursiveSelector(accumulator, selector, child);
+        }
+    }
+
+    @Override
     public HtmlElements elements() {
         Elements e;
         if (elements != null) {
@@ -122,7 +181,6 @@ public class ExtantHtmlFragment implements HtmlFragment {
         List<HtmlElement> results = new ArrayList<HtmlElement>(e.size());
         for (Element ele : e) {
             results.add(HtmlElement.Factory.fromElement(ele));
-
         }
         return HtmlElements.Factory.fromList(results);
     }

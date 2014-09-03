@@ -34,6 +34,8 @@ public interface HtmlElement extends HtmlFragment {
 
     Attributes attributes();
 
+    String tagName();
+
     public static class Factory {
         public static HtmlElement fromStream(InputStream is) {
             if (is != null) {

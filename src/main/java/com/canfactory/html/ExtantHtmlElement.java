@@ -66,6 +66,11 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
     }
 
     @Override
+    public HtmlFragment all(Selector selector) {
+        return null;
+    }
+
+    @Override
     public String text() {
         return super.text();
     }
@@ -86,6 +91,11 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
             attrs = new Attributes(firstElement().attributes());
         }
         return attrs;
+    }
+
+    @Override
+    public String tagName() {
+        return firstElement().tagName();
     }
 
     private void assertValidContent() {

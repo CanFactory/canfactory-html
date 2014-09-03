@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Represents a list of html attributes associated with an element
  */
-public class Attributes implements Iterable<Attribute> {
+public class Attributes extends ToStringComparable implements Iterable<Attribute> {
     private List<Attribute> attributes;
 
     private Attributes() {

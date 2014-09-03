@@ -49,11 +49,26 @@ public interface HtmlFragment {
 
     HtmlFragment all(String cssSelector);
 
+    HtmlFragment all(Selector selector);
+
+    HtmlElement first(Selector selector);
+
+    HtmlElement nth(int index, Selector selector);
+
+    HtmlElement last(Selector selector);
+
+
     // information on the html
 
     String text();
 
     String outerHtml();
+
+
+
+    public interface Selector {
+        boolean matches(HtmlElement element);
+    }
 
 
     public static class Factory {
@@ -76,5 +91,9 @@ public interface HtmlFragment {
         public static HtmlFragment fromElements(Elements elements) {
             return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
         }
+//
+//        public static HtmlFragment fromElements(List<HtmlElement> elements) {
+//            return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
+//        }
     }
 }

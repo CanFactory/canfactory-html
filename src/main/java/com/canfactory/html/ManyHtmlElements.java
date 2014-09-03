@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ManyHtmlElements implements HtmlElements
 {
-
     private List<HtmlElement> data;
 
     public ManyHtmlElements(List<HtmlElement> data) {
@@ -30,7 +29,6 @@ public class ManyHtmlElements implements HtmlElements
     public int size() {
         return data.size();
     }
-
 
     @Override
     public Iterator<HtmlElement> iterator() {
