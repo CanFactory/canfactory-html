@@ -24,31 +24,31 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 @Test
-public class OnceTest {
+public class OneTest {
 
     public void shouldPass() {
-        Once once = new Once(new SimpleTextMatcher("Dog"));
+        One one = new One(new SimpleTextMatcher("Dog"));
 
-        assertTrue(once.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Cat</li><li>Rabbit</li>")));
+        assertTrue(one.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Cat</li><li>Rabbit</li>")));
     }
 
     public void shouldFailIfNotPresent() {
-        Once once = new Once(new SimpleTextMatcher("Rhino"));
+        One one = new One(new SimpleTextMatcher("Rhino"));
 
-        boolean result = once.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Cat</li><li>Rabbit</li>"));
+        boolean result = one.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Cat</li><li>Rabbit</li>"));
         Description description = new StringDescription();
-        once.describeTo(description);
+        one.describeTo(description);
 
         assertEquals(description.toString(), "Failed to match once for any element in the fragment, instead matched 0 times.\nFailed to find \"Rhino\"");
         assertFalse(result);
     }
 
     public void shouldFailIfMoreThanOnePresent() {
-        Once once = new Once(new SimpleTextMatcher("Dog"));
+        One one = new One(new SimpleTextMatcher("Dog"));
 
-        boolean result = once.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Dog</li><li>Cat</li><li>Rabbit</li>"));
+        boolean result = one.matchesSafely(HtmlFragment.Factory.fromString("<li>Dog</li><li>Dog</li><li>Cat</li><li>Rabbit</li>"));
         Description description = new StringDescription();
-        once.describeTo(description);
+        one.describeTo(description);
 
         assertEquals(description.toString(), "Failed to match once for any element in the fragment, instead matched 2 times.\nFailed to find \"Dog\"");
         assertFalse(result);

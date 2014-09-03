@@ -23,18 +23,18 @@ import org.hamcrest.TypeSafeMatcher;
 
 import static java.lang.String.format;
 
-public class Once extends TypeSafeMatcher<HtmlFragment> {
+public class One extends TypeSafeMatcher<HtmlFragment> {
 
     private Matcher<HtmlElement> matcher;
     private int matches;
 
-    public Once(Matcher<HtmlElement> matcher) {
+    public One(Matcher<HtmlElement> matcher) {
         this.matcher = matcher;
     }
 
     @Factory
-    public static Matcher<HtmlFragment> once(Matcher<HtmlElement> matcher) {
-        return new Once(matcher);
+    public static Matcher<HtmlFragment> one(Matcher<HtmlElement> matcher) {
+        return new One(matcher);
     }
 
     @Override
