@@ -40,6 +40,18 @@ public class HasAttribute extends BaseHtmlElementMatcher {
     }
 
     @Factory
+    public static Matcher<HtmlElement> hasAttribute(String name, String value, String... rest) {
+
+        return new HasAttribute(Arrays.asList(new Attribute(name, value)));
+    }
+
+
+    @Factory
+    public static Matcher<HtmlElement> hasAttribute(String name) {
+        return new HasAttribute(Arrays.asList(new Attribute(name, "")));
+    }
+
+    @Factory
     public static Matcher<HtmlElement> hasAttribute(Attribute attribute) {
         return new HasAttribute(Arrays.asList(attribute));
     }
@@ -57,7 +69,15 @@ public class HasAttribute extends BaseHtmlElementMatcher {
     protected boolean matchesSafely(HtmlElement html) {
         Set<Attribute> toLookFor = new HashSet<Attribute>(expectedAttributes);
         for (Attribute actualAttr : html.attributes()) {
+            // fully matched attribute including check of value
             toLookFor.remove(actualAttr);
+
+            // only provided name, so just look to see if this attr exists
+            for (Attribute attr : expectedAttributes){
+                if (attr.value().isEmpty() && attr.name().equals(actualAttr.name())){
+                    toLookFor.remove(attr);
+                }
+            }
         }
         return toLookFor.isEmpty();
     }

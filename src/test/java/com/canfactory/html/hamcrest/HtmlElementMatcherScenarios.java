@@ -58,6 +58,20 @@ public class HtmlElementMatcherScenarios {
         assertThat(fragment.first("ul"), not(hasAttribute("id", "numbers")));
     }
 
+    public void shouldAssertAttributePresenceWithoutValue() {
+        HtmlFragment html = HtmlFragment.Factory.fromString("<ul><li class=\"one\">One</li><li>Two</ul>");
+
+        assertThat(html.first("li"), hasAttribute("class"));
+        assertThat(html.last("li"), not(hasAttribute("class")));
+    }
+
+    public void shouldAssertMultipleAttributes() {
+        HtmlFragment html = HtmlFragment.Factory.fromString("<p class=\"one\" lang=\"fr\" >Une</p>");
+
+        assertThat(html.first("p"), hasAttribute("class","one","lang","fr"));
+        assertThat(html.last("li"), not(hasAttribute("class")));
+    }
+
 
     public void shouldAssertHasAttributes() {
         HtmlElement element = HtmlElement.Factory.fromString("<p id=\"p1\" name=\"para1\"></p>");
