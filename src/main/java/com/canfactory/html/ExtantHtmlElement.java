@@ -21,14 +21,12 @@ import org.jsoup.nodes.Element;
  * on {@link com.canfactory.html.HtmlElement.Factory} to create instances.
  */
 public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement {
-
     private Attributes attributes;
 
     ExtantHtmlElement(String html) {
         super(html);
         assertValidContent();
     }
-
 
     ExtantHtmlElement(Element element) {
         super(element);
@@ -37,11 +35,6 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
     @Override
     public boolean exists() {
         return true;
-    }
-
-    @Override
-    public HtmlFragment all(Selector selector) {
-        return null;
     }
 
     public Attributes attributes() {

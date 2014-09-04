@@ -47,14 +47,6 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
     ExtantHtmlFragment(Elements elements) {
         this.elements = elements;
     }
-//
-//    protected ExtantHtmlFragment(InputStream is) {
-//        try {
-//            document = Jsoup.parse(is, "UTF-8", "http://example.com/");
-//        } catch (IOException ioex) {
-//            throw new RuntimeException(ioex);
-//        }
-//    }
 
     protected Document jsoupDoc() {
         if (document == null) {
