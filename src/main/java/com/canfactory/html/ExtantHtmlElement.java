@@ -16,8 +16,6 @@ package com.canfactory.html;
 
 import org.jsoup.nodes.Element;
 
-import java.io.InputStream;
-
 /**
  * An valid (exists) {@link com.canfactory.html.HtmlElement}. Use the static methods
  * on {@link com.canfactory.html.HtmlElement.Factory} to create instances.
@@ -28,11 +26,6 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
 
     ExtantHtmlElement(String html) {
         super(html);
-        assertValidContent();
-    }
-
-    ExtantHtmlElement(InputStream is) {
-        super(is);
         assertValidContent();
     }
 

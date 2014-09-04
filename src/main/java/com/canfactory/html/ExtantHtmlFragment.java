@@ -19,8 +19,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,21 +47,20 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
     ExtantHtmlFragment(Elements elements) {
         this.elements = elements;
     }
-
-    protected ExtantHtmlFragment(InputStream is) {
-        try {
-            document = Jsoup.parse(is, "UTF-8", "http://example.com/");
-        } catch (IOException ioex) {
-            throw new RuntimeException(ioex);
-        }
-    }
+//
+//    protected ExtantHtmlFragment(InputStream is) {
+//        try {
+//            document = Jsoup.parse(is, "UTF-8", "http://example.com/");
+//        } catch (IOException ioex) {
+//            throw new RuntimeException(ioex);
+//        }
+//    }
 
     protected Document jsoupDoc() {
-        if (elements != null) {
-            return Jsoup.parse(elements.outerHtml());
-        } else {
-            return document;
+        if (document == null) {
+            document = Jsoup.parse(elements.outerHtml());
         }
+        return document;
     }
 
     protected Element firstElement() {
@@ -71,11 +68,10 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
     }
 
     protected Elements allElements() {
-        if (elements != null) {
-             return elements;
-        } else {
-            return document.select("body > *");
+        if (elements == null) {
+            elements = document.select("body > *");
         }
+        return elements;
     }
 
     public boolean exists() {

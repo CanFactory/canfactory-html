@@ -15,8 +15,11 @@
 package com.canfactory.html;
 
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 
@@ -40,7 +43,11 @@ public interface HtmlElement extends HtmlFragment {
 
         public static HtmlElement fromStream(InputStream is) {
             if (is != null) {
-                return new ExtantHtmlElement(is);
+                try {
+                    return fromJsoupDoc(Jsoup.parse(is, "UTF-8", "http://example.com/"));
+                } catch (IOException ioex) {
+                    throw new RuntimeException(ioex);
+                }
             } else {
                 throw new RuntimeException("InputStream is missing");
             }
@@ -56,6 +63,14 @@ public interface HtmlElement extends HtmlFragment {
 
         public static HtmlElement fromElement(Element element) {
             return (element == null) ? EmptyHtmlElement.INSTANCE : new ExtantHtmlElement(element);
+        }
+
+        public static HtmlElement fromJsoupDoc(Document doc) {
+            if (doc != null && doc.body() != null) {
+                return new ExtantHtmlElement(doc);
+            } else {
+                return new EmptyHtmlElement();
+            }
         }
     }
 }

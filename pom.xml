@@ -6,6 +6,8 @@
 
     <groupId>com.canfactory</groupId>
     <artifactId>html</artifactId>
+    <name>Can Factory HTML</name>
+    <description>Fluent style navigation of HTML docs plus compatible Hamcrest matchers for assertions</description>
     <packaging>jar</packaging>
     <version>0.0.4-SNAPSHOT</version>
 
@@ -26,7 +28,6 @@
     </repositories>
 
     <dependencies>
-
 
         <dependency>
             <!-- jsoup HTML parser library @ http://jsoup.org/ -->
