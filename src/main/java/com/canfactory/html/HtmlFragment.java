@@ -68,7 +68,7 @@ public interface HtmlFragment {
     String outerHtml();
 
     public interface Selector {
-        boolean matches(HtmlElement element);
+        boolean matches(HtmlElements ancestors, HtmlElement element);
     }
 
     public static class Factory {

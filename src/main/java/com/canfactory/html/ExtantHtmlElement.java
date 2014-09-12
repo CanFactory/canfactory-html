@@ -48,6 +48,11 @@ public class ExtantHtmlElement extends ExtantHtmlFragment implements HtmlElement
         return firstElement().tagName();
     }
 
+    public String classNames() {
+        if (attributes().hasAttribute("class")) return attributes().value("class");
+        else return "";
+    }
+
     private void assertValidContent() {
         if (document != null) {
             if (document.select("body > *").size() != 1) {

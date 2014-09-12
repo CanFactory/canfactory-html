@@ -41,7 +41,8 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
     }
 
     ExtantHtmlFragment(Element element) {
-        this.document = Jsoup.parse(element.outerHtml());
+        this.elements = new Elements(1);
+        this.elements.add(element);
     }
 
     ExtantHtmlFragment(Elements elements) {
@@ -107,8 +108,11 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
 
         List<Element> accumulator = new ArrayList<Element>();
+        HtmlElements ancestors = HtmlElements.Factory.EMPTY;
         for (Element ele : elementsToTest) {
-            recursiveSelector(accumulator, selector, ele);
+            if (!ele.tagName().equals("script")) {
+                recursiveSelector(accumulator, selector, ancestors, ele);
+            }
         }
         return HtmlFragment.Factory.fromElements(new Elements(accumulator));
     }
@@ -143,12 +147,15 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    private void recursiveSelector(List<Element> accumulator, Selector selector, Element ele) {
-        if (selector.matches(HtmlElement.Factory.fromElement(ele))) {
+    private void recursiveSelector(List<Element> accumulator, Selector selector, HtmlElements ancestors, Element ele) {
+        HtmlElement htmlElement = HtmlElement.Factory.fromElement(ele);
+        if (selector.matches(ancestors, htmlElement)) {
             accumulator.add(ele);
         }
         for (Element child : ele.children()) {
-            recursiveSelector(accumulator, selector, child);
+            if (!child.tagName().equals("script")) {
+                recursiveSelector(accumulator, selector, ancestors.append(htmlElement), child);
+            }
         }
     }
 
@@ -157,7 +164,9 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
 
         List<HtmlElement> results = new ArrayList<HtmlElement>(e.size());
         for (Element ele : e) {
-            results.add(HtmlElement.Factory.fromElement(ele));
+            if (!ele.tagName().equals("script")) {
+                results.add(HtmlElement.Factory.fromElement(ele));
+            }
         }
         return HtmlElements.Factory.fromList(results);
     }

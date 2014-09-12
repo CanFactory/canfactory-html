@@ -76,6 +76,10 @@ public class EmptyHtmlElement implements HtmlElement {
         return null;
     }
 
+    public String classNames() {
+        return EMPTY;
+    }
+
     public HtmlElements elements() {
         return HtmlElements.Factory.empty();
     }

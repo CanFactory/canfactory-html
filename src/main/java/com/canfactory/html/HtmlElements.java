@@ -29,6 +29,8 @@ public interface HtmlElements extends Iterable<HtmlElement> {
 
     int size();
 
+    HtmlElements append(HtmlElement htlmElement);
+
     public static class Factory {
 
         static HtmlElements EMPTY = new ManyHtmlElements(new ArrayList<HtmlElement>(0));

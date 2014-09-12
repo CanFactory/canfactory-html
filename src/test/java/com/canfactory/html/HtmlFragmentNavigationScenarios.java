@@ -142,6 +142,22 @@ public class HtmlFragmentNavigationScenarios {
     }
 
 
+    public void shouldIgnoreScript() {
+        // TODO - is this is a good rule - i'm excluding it for now because the current
+        // implementation of ExtantHtlmElement cant handle scripts
+        String html = "<p>Para 1</p>\n" +
+                "<script type=\"text/javascript\">\n" +
+                "   Alert(\"This is java script\")\n" +
+                "</script>\n" +
+                "<p>Para 2</p>";
+
+        HtmlFragment fragment = HtmlFragment.Factory.fromString(html);
+
+        assertEquals(fragment.elements().size(), 2);
+
+    }
+
+
     private HtmlFragment loadExample(String exampleFileName) {
         return Factory.fromStream(this.getClass().getResourceAsStream("/com/canfactory/html/" + exampleFileName));
     }
@@ -153,7 +169,7 @@ public class HtmlFragmentNavigationScenarios {
             this.tagName = tagName;
         }
 
-        public boolean matches(HtmlElement element) {
+        public boolean matches(HtmlElements ancestors, HtmlElement element) {
             return (element.tagName().equals(tagName));
         }
     }

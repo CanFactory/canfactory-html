@@ -14,6 +14,7 @@
 
 package com.canfactory.html;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,14 @@ public class ManyHtmlElements implements HtmlElements {
 
     public int size() {
         return data.size();
+    }
+
+
+    public HtmlElements append(HtmlElement newElement) {
+        List<HtmlElement> elements = new ArrayList<HtmlElement>(data.size() + 1);
+        elements.addAll(data);
+        elements.add(newElement);
+        return HtmlElements.Factory.fromList(elements);
     }
 
     public Iterator<HtmlElement> iterator() {

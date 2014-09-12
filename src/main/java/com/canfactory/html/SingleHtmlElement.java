@@ -14,7 +14,9 @@
 
 package com.canfactory.html;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class SingleHtmlElement implements HtmlElements {
@@ -31,6 +33,13 @@ public class SingleHtmlElement implements HtmlElements {
 
     public int size() {
         return 1;
+    }
+
+    public HtmlElements append(HtmlElement newElement) {
+        List<HtmlElement> elements = new ArrayList<HtmlElement>(2);
+        elements.add(element);
+        elements.add(newElement);
+        return HtmlElements.Factory.fromList(elements);
     }
 
     public static class SingleItemIter implements Iterator<HtmlElement> {
