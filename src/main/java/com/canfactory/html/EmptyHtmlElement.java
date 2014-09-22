@@ -83,4 +83,9 @@ public class EmptyHtmlElement implements HtmlElement {
     public HtmlElements elements() {
         return HtmlElements.Factory.empty();
     }
+
+    public HtmlElements all() {
+        return HtmlElements.Factory.empty();
+    }
+
 }

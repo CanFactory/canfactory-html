@@ -31,6 +31,9 @@ public class ManyHtmlElements implements HtmlElements {
         return data.size();
     }
 
+    public <T> Iterable<T> map(Functor<T> functor) {
+        return new TranformIterable<T>(this, functor);
+    }
 
     public HtmlElements append(HtmlElement newElement) {
         List<HtmlElement> elements = new ArrayList<HtmlElement>(data.size() + 1);

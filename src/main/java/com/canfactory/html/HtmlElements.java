@@ -17,6 +17,7 @@ package com.canfactory.html;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ import java.util.List;
 public interface HtmlElements extends Iterable<HtmlElement> {
 
     int size();
+
+    <T> Iterable<T> map(Functor<T> functor);
 
     HtmlElements append(HtmlElement htlmElement);
 
@@ -65,6 +68,50 @@ public interface HtmlElements extends Iterable<HtmlElement> {
 
         public static HtmlFragment fromElements(Elements elements) {
             return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
+        }
+    }
+
+
+    public interface Functor<T> {
+        T map(HtmlElement e);
+    }
+
+
+    public class TranformIterator<T> implements Iterator<T> {
+        private Iterator<HtmlElement> rawIterator;
+        private Functor<T> functor;
+
+        public TranformIterator(Iterator<HtmlElement> raw, Functor<T> functor) {
+            this.rawIterator = raw;
+            this.functor = functor;
+        }
+
+        public boolean hasNext() {
+            return rawIterator.hasNext();
+        }
+
+        public T next() {
+            return functor.map(rawIterator.next());
+        }
+
+        public void remove() {
+            throw new RuntimeException("Iterator.remove() not supported");
+        }
+    }
+
+    public class TranformIterable<T> implements Iterable<T> {
+
+        private Iterable<HtmlElement> rawIterable;
+        private Functor<T> functor;
+
+        public TranformIterable(Iterable<HtmlElement> raw, Functor<T> functor) {
+            this.rawIterable = raw;
+            this.functor = functor;
+        }
+
+        @Override
+        public Iterator<T> iterator() {
+            return new TranformIterator<T>(rawIterable.iterator(),functor);
         }
     }
 }

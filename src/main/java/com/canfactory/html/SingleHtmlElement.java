@@ -31,6 +31,10 @@ public class SingleHtmlElement implements HtmlElements {
         return new SingleItemIter(element);
     }
 
+    public <T> Iterable<T> map(Functor<T> functor) {
+        return new TranformIterable<T>(this, functor);
+    }
+
     public int size() {
         return 1;
     }

@@ -159,7 +159,7 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
         }
     }
 
-    public HtmlElements elements() {
+    public HtmlElements all() {
         Elements e = allElements();
 
         List<HtmlElement> results = new ArrayList<HtmlElement>(e.size());
@@ -169,6 +169,10 @@ public class ExtantHtmlFragment extends ToStringComparable implements HtmlFragme
             }
         }
         return HtmlElements.Factory.fromList(results);
+    }
+
+    public HtmlElements elements(){
+        return all();
     }
 
     public String text() {
