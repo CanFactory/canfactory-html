@@ -63,10 +63,6 @@ public class EmptyHtmlFragment implements HtmlFragment {
         return HtmlElements.Factory.empty();
     }
 
-    public HtmlElements all() {
-        return HtmlElements.Factory.empty();
-    }
-
     public String text() {
         return EMPTY;
     }

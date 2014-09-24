@@ -19,11 +19,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class ManyHtmlElements implements HtmlElements {
+public class ManyHtmlElements extends ToStringComparable implements HtmlElements {
 
     private List<HtmlElement> data;
 
-    public ManyHtmlElements(List<HtmlElement> data) {
+    ManyHtmlElements(List<HtmlElement> data) {
         this.data = data;
     }
 
@@ -35,6 +35,18 @@ public class ManyHtmlElements implements HtmlElements {
         return new TranformIterable<T>(this, functor);
     }
 
+    @Override
+    public Iterable<HtmlElements> grouped(int size) {
+        final HtmlElements THIS = this;
+        final int SIZE = size;
+        return new Iterable<HtmlElements>() {
+            @Override
+            public Iterator<HtmlElements> iterator() {
+                return new GroupedIterator(THIS, SIZE);
+            }
+        };
+    }
+
     public HtmlElements append(HtmlElement newElement) {
         List<HtmlElement> elements = new ArrayList<HtmlElement>(data.size() + 1);
         elements.addAll(data);
@@ -44,5 +56,14 @@ public class ManyHtmlElements implements HtmlElements {
 
     public Iterator<HtmlElement> iterator() {
         return Collections.unmodifiableList(data).iterator();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (HtmlElement e : data) {
+            sb.append(e.toString());
+        }
+        return sb.toString();
     }
 }

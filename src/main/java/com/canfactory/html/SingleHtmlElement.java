@@ -19,11 +19,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class SingleHtmlElement implements HtmlElements {
+public class SingleHtmlElement extends ToStringComparable implements HtmlElements {
 
     private HtmlElement element;
 
-    public SingleHtmlElement(HtmlElement element) {
+    SingleHtmlElement(HtmlElement element) {
         this.element = element;
     }
 
@@ -33,6 +33,18 @@ public class SingleHtmlElement implements HtmlElements {
 
     public <T> Iterable<T> map(Functor<T> functor) {
         return new TranformIterable<T>(this, functor);
+    }
+
+    @Override
+    public Iterable<HtmlElements> grouped(int size) {
+        final HtmlElements THIS = this;
+        final int SIZE = size;
+        return new Iterable<HtmlElements>() {
+            @Override
+            public Iterator<HtmlElements> iterator() {
+                return new GroupedIterator(THIS, SIZE);
+            }
+        };
     }
 
     public int size() {
@@ -70,5 +82,11 @@ public class SingleHtmlElement implements HtmlElements {
         public void remove() {
             throw new RuntimeException("not supported");
         }
+    }
+
+
+    @Override
+    public String toString() {
+        return element.outerHtml();
     }
 }

@@ -39,13 +39,7 @@ public interface HtmlFragment {
     // to manipulate the collection
     boolean exists();
 
-    /**
-     * @deprecated - Use all() - its more consistent with the rest of the API
-     */
     HtmlElements elements();
-
-    HtmlElements all();
-
 
     // about searching / selecting
 
