@@ -9,7 +9,7 @@
     <name>Can Factory HTML</name>
     <description>Fluent style navigation of HTML docs plus compatible Hamcrest matchers for assertions</description>
     <packaging>jar</packaging>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5</version>
 
     <repositories>
         <repository>
