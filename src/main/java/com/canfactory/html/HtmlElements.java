@@ -15,7 +15,6 @@
 package com.canfactory.html;
 
 import com.canfactory.commons.collections.iterators.TakeNIterator;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -75,10 +74,6 @@ public interface HtmlElements extends Iterable<HtmlElement> {
             return EMPTY;   // should ideally have its own implementation;
         }
 
-
-        public static HtmlFragment fromElements(Elements elements) {
-            return elements.isEmpty() ? new EmptyHtmlFragment() : new ExtantHtmlFragment(elements);
-        }
     }
 
 
@@ -178,6 +173,5 @@ public interface HtmlElements extends Iterable<HtmlElement> {
             }
             return HtmlElements.Factory.fromList(results);
         }
-
     }
 }
