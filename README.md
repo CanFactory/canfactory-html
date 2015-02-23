@@ -25,16 +25,17 @@ mvn clean install
 Usage
 -----
 
-
 ###  HtmlElement
 
 An HTML element has a single root node but can have any number of children, for example:
 
-<pre><ul>
+```html
+<ul>
     <li>Red</li>
     <li>Green</li>
     <li>Blue</li>
-</ul></pre>
+</ul>
+```
 
 #### Create from a Stream
 
@@ -57,16 +58,6 @@ HtmlElement.Factory.fromStream(Element element)
 ###  HtmlFragment
 
 An HTML fragment is a block of HTML that has no single root node, for example:
-
-```
-<p>This is paragraph 1</p>
-<p>This is paragraph 2</p>
-<ul>
-    <li>Red</li>
-    <li>Green</li>
-    <li>Blue</li>
-</ul>
-```
 
 ```html
 <p>This is paragraph 1</p>
@@ -146,13 +137,18 @@ _For those who care, the API is designed to be vaguely Monadic, like the new str
 Whats is a Monad?  The first lines of the [Wikipedia article](http://en.wikipedia.org/wiki/Monad_%28functional_programming%29)
 sum up the behaviour: "In functional programming, a monad is a structure that represents computations defined as sequences of steps.
 A type with a monad structure defines what it means to chain operations, or nest functions of that type together.
-This allows the programmer to build pipelines that process data in steps, in which each action is decorated with additional processing rules provided by the monad." There you are, though the "Curse of the Monad":http://www.i-programmer.info/news/167-javascript/5207-crockford-on-monads-and-gonads.html says that its something you need to figure out for yourself._
+This allows the programmer to build pipelines that process data in steps, in which each action is decorated with additional
+processing rules provided by the monad."
 
-_One benefit, to lift a phrase from a blog article is "So, in the monadic domain, a function thus bound can be guaranteed to, e.g., be working with an instance and not a null.". So we don't have to worry about null, which is nice. In this API this is managed by implementations that handle the empty collection state._
+_One benefit, to lift a phrase from a blog article is "a function thus bound can be guaranteed to be working with an
+instance and not a null.". So we don't have to worry about null, which is nice.
+In this API this is managed by implementations of HtmlElement and HtmlFragment that handle the empty collection state._
 
 ### Matching
 
-The available matchers from the project are currently as follows, but they may be combined with existing ones in hamcrest, most notably; not, allOf, anyOf. They are meant to be used in a fluid readable manner which may become more obvious in some of the examples afterwards.
+The available matchers from the project are currently as follows, but they may be combined with existing ones in
+hamcrest, most notably; not, allOf, anyOf. They are meant to be used in a fluid readable manner which may
+become more obvious in some of the examples afterwards.
 
 #### Any
 
@@ -193,7 +189,6 @@ hasAttribute(Attribute attribute)
 hasAttributes(Attribute... attributes)
 hasAttributes(String... nameValuePairs)
 ```
-
 
 #### HasClass
 
@@ -273,43 +268,3 @@ Assert that the 2nd @li@ has the class "second".
 ```java
 assertThat(html.nth(2, "li"), hasClass("second"))
 ```
-
-
-
-
-
-
-Some common use cases
-
-Encapsulating HTML
-------------------
-The generic class that is mostly passed around internally is HtmlFragment. This can basically hold anything. There are a special cases for
-which a more specific class is appropriate and mostly this is used to make method signatures clearer.
-* HtmlDocument is a fully form and valid page. For our purposes that means it has a <head> and a <body>
-* HtmlElement is a HtmlFragment that has just a single top level element, i.e. there are no siblings
-* HtmlLeafElement is a single element with no children ? is this useful
-
-Any attempt to cast to an invalid container will result in a RunTime error
-
-Navigating Html
----------------
-
-The HtmlFragment class supports simple navigation of the Html. It is intended for use in tests cases where the format and structure of the
-HTML may vary overtime but the intent of the test case stays the same.
-
-<p>soaidho</p>
-<p>oisdhfioh</p>
-
-<div>
-    <p>soaidho</p>
-    <p>oisdhfioh</p>
-</div>
-
-<p>Something</p>
-
-There are three styles of navigation:
-
-###
-
-
-
