@@ -138,7 +138,7 @@ Whats is a Monad?  The first lines of the [Wikipedia article](http://en.wikipedi
 sum up the behaviour: "In functional programming, a monad is a structure that represents computations defined as sequences of steps.
 A type with a monad structure defines what it means to chain operations, or nest functions of that type together.
 This allows the programmer to build pipelines that process data in steps, in which each action is decorated with additional
-processing rules provided by the monad."
+processing rules provided by the monad."_
 
 _One benefit, to lift a phrase from a blog article is "a function thus bound can be guaranteed to be working with an
 instance and not a null.". So we don't have to worry about null, which is nice.
@@ -233,37 +233,37 @@ one(Matcher<HtmlElement> matcher)
 
 #### Examples
 
-Assert that each @li@ found has the text "list item".
+Assert that each li tag found has the text "list item".
 
 ```java
 assertThat(html.all("li"), each(hasText("list item")))
 ```
 
-Assert that no @li@ in found has the text "hello".
+Assert that no li tag in found has the text "hello".
 
 ```java
 assertThat(html.all("li"), none(hasText("list item")))
 ```
 
-Assert that only one @h1@ has the text "Now Showing".
+Assert that only one h1 has the text "Now Showing".
 
 ```java
 assertThat(html.all("h1"), one(hasText("Now Showing")))
 ```
 
-Assert that all @div@'s with the class "component" have an attribute "data-id".
+Assert that all div tag with the class "component" have an attribute "data-id".
 
 ```java
 assertThat(html.all("div.component"), each(hasAttribute("data-id")))
 ```
 
-Assert that there is only one @form@ present.
+Assert that there is only one form present.
 
 ```java
 assertThat(html.all("form"), count(1))
 ```
 
-Assert that the 2nd @li@ has the class "second".
+Assert that the 2nd li tag has the class "second".
 
 ```java
 assertThat(html.nth(2, "li"), hasClass("second"))

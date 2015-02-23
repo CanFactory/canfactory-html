@@ -18,6 +18,8 @@ import com.canfactory.html.HtmlFragment.Factory;
 import com.canfactory.html.HtmlFragment.Selector;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 @Test
 public class ExtractFragmentTest {
 
@@ -38,8 +40,10 @@ public class ExtractFragmentTest {
 
 
         HtmlFragment results = extractor.findAll(fragment);
+        assertEquals(results.outerHtml(),"<div class=\"data\"> \n" +
+                " <p>Green Data</p> \n" +
+                "</div>");
 
-        //System.out.println(results)
     }
 
 
