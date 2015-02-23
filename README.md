@@ -58,13 +58,13 @@ HtmlElement.Factory.fromStream(Element element)
 
 An HTML fragment is a block of HTML that has no single root node, for example:
 
-<pre><p>This is paragraph 1</p>
-<p>This is paragraph 2</p>
-<ul>
-    <li>Red</li>
-    <li>Green</li>
-    <li>Blue</li>
-</ul></pre>
+> <pre><p>This is paragraph 1</p>
+> <p>This is paragraph 2</p>
+> <ul>
+>     <li>Red</li>
+>     <li>Green</li>
+>     <li>Blue</li>
+></ul></pre>
 
 #### Create from an Input Stream
 
