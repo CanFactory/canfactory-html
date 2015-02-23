@@ -39,8 +39,7 @@ public class ExtractFragmentTest {
 
         HtmlFragment results = extractor.findAll(fragment);
 
-        System.out.println(results);
-
+        //System.out.println(results)
     }
 
 

@@ -14,7 +14,8 @@
 
 package com.canfactory.html;
 
-import com.canfactory.commons.collections.iterators.TakeNIterator;
+
+import com.canfactory.html.iterators.TakeNIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;

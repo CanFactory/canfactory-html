@@ -43,18 +43,6 @@
             <version>1.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.canfactory.commons</groupId>
-            <artifactId>collections</artifactId>
-            <version>0.0.2</version>
-            <exclusions>
-                <exclusion>
-                    <!-- this functional isn't required and pulls in libraries we don't need here -->
-                    <groupId>org.json</groupId>
-                    <artifactId>json</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
 
         <!-- Test scope -->
