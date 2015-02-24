@@ -33,7 +33,6 @@ From Maven
 
 ```
 
-
 To build and install
 ---------------------
 mvn clean install
@@ -42,7 +41,7 @@ mvn clean install
 Stability
 ---------
 This library is used to support unit tests in production code and can be considered relatively stable.
-New features subject to change are marked with @Beta annotation
+New features subject to change are marked with the @Beta annotation
 
 Usage
 -----
