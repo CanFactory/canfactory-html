@@ -21,7 +21,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-// all must match
+// all immediate child elements in the fragment must match
 public class Each extends TypeSafeMatcher<HtmlFragment> {
 
     private int index;

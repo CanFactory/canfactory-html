@@ -20,7 +20,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-
+// The count of elements in an HtmlFragment
 public class Count extends TypeSafeMatcher<HtmlFragment> {
 
     private int expectedCount;

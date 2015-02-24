@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.canfactory</groupId>
-    <artifactId>html</artifactId>
+    <artifactId>canfactory-html</artifactId>
     <name>Can Factory HTML</name>
     <description>Fluent style navigation of HTML docs plus compatible Hamcrest matchers for assertions</description>
     <packaging>jar</packaging>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <repositories>
         <repository>

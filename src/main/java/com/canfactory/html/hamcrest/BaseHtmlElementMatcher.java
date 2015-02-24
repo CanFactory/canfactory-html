@@ -18,6 +18,7 @@ import com.canfactory.html.HtmlElement;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
+// Base class for any HtmlElement matcher
 public abstract class BaseHtmlElementMatcher extends TypeSafeMatcher<HtmlElement> {
 
     private HtmlElement elementToMatch;

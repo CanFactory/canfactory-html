@@ -19,6 +19,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
+// does the element have the expected id
 public class HasId extends BaseHtmlElementMatcher {
 
     private String expectedId;

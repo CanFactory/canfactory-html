@@ -23,6 +23,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import static java.lang.String.format;
 
+// Does only one of the immediate child elements match the rule
 public class One extends TypeSafeMatcher<HtmlFragment> {
 
     private Matcher<HtmlElement> matcher;

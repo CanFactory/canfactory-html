@@ -20,7 +20,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-
+// does the fragment have at least one element? i.e, is it not empty
 public class HasElement extends TypeSafeMatcher<HtmlFragment> {
 
     @Factory

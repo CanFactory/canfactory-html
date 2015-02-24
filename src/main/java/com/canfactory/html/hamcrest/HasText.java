@@ -19,7 +19,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
-
+// does the element contain the expected text
 public class HasText extends BaseHtmlElementMatcher {
 
     private String expectedText;

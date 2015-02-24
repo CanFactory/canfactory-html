@@ -21,6 +21,7 @@ import org.hamcrest.Matcher;
 
 import java.util.*;
 
+// Does the element have the specified class(es)
 public class HasClass extends BaseHtmlElementMatcher {
     private List<String> expectedClasses;
 

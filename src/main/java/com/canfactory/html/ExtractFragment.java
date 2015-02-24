@@ -16,7 +16,10 @@ package com.canfactory.html;
 
 import com.canfactory.html.HtmlFragment.Selector;
 
-// EXPERIMENTAL - will get merged into main API if useful
+/**
+ * EXPERIMENTAL - will get merged into main API if useful
+ */
+@Beta
 public class ExtractFragment {
     private Selector parentSelector;
     private Selector childSelector;

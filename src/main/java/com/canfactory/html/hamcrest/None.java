@@ -21,7 +21,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-// none must match
+// do none of the immediate child elements in the fragment match the rule
 public class None extends TypeSafeMatcher<HtmlFragment> {
 
     private Matcher<HtmlElement> matcher;

@@ -16,6 +16,7 @@ package com.canfactory.html;
 
 /**
  * A simple but inefficient equality and comparison implemented in terms of toString.
+ * Should be replaced with more efficient custom equality comparisons
  */
 public class ToStringComparable implements Comparable {
 

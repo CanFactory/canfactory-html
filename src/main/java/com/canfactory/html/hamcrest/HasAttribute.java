@@ -22,14 +22,13 @@ import org.hamcrest.Matcher;
 
 import java.util.*;
 
-
+// does the element have the requested attributes?
 public class HasAttribute extends BaseHtmlElementMatcher {
     private List<Attribute> expectedAttributes;
 
     public HasAttribute(List<Attribute> expectedAttributes) {
         this.expectedAttributes = expectedAttributes;
     }
-
 
 
     @Factory

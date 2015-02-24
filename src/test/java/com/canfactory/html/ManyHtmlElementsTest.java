@@ -50,14 +50,5 @@ public class ManyHtmlElementsTest {
         }
         return HtmlElements.Factory.fromList(results);
     }
-//
-//    private String elementsToText(HtmlElements elements){
-//        // N.B - should be a method on HtlmElements
-//        StringBuilder sb = new StringBuilder();
-//        for (HtmlElement e : elements){
-//            sb.append(e.text());
-//        }
-//        return sb.toString();
-//
-//    }
+
 }
